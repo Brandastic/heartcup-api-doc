@@ -1,0 +1,262 @@
+FORMAT: 1A
+HOST: http://heartcup.apiblueprint.org/
+
+# HeartCup API
+
+## Users [/users]
+
+### Get User [GET /user/{user}]
+
+Fetch the user details
+
++ Parameters
+    + user (required) - The user ID or email address
+    
++ Response 200 (application/json)
+    - Attributes (StoredUser)
+    
++ Response 404 (application/json)
+    - Attributes
+        - message: User does not exist (string) - The error message
+
+### Login [POST /user/token]
+
+Create a JWT token for the given user
+
++ Attributes
+    + emailAddress (required) - The user's email address
+    + password (required) - The user's password
+    
++ Response 200 (application/json)
+    - Attributes
+        - token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ` (string) - The JWT Token
+        
++ Response 400 (application/json)
+    - Attributes
+        - message: Invalid email address or password (string) - The error message
+
+### Register [POST /user]
+
+Register a new user
+
++ Attributes (User)
+    
++ Request (application/x-www-form-urlencoded)
+    
++ Response 201 (application/json)
+    - Attributes (User)
+
++ Response 422 (application/json)
+    - Attributes
+        - message: User already exists (string) - The error message
+
+### Update [PUT /user/{user}]
+
+Update the given user
+
++ Parameters
+    + user (required) - The user ID or email address
+    
++ Attributes (User)
+    
++ Response 204
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
+### Update Profile Image [PUT /user/{user}/profileImage]
+
+Update the given user's profile image
+
++ Parameters
+    + user (required) - The user ID or email address
+    
++ Response 204
+    
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
+## Projects [/project]
+
+### Search [GET /project{?query,orderBy,order,limit,page}]
+
+Search for projects. Returns a list of project summaries.
+
++ Parameters
+    + query (optional) - Search query
+    + orderBy (optional) - Project attribute to order by
+    + order (optional) - DESC or ASC (default: DESC)
+    + limit (optional) - The maximum number of projects to return
+    + page (optional) - The page to return, if limit is also given
+
++ Response 200 (application/json)
+    - Attributes (array)
+        - (Project)
+            - id: 1
+            - title: After School Programs
+        - (Project)
+            - id: 2
+            - title: Music in the Park
+        - (Project)
+            - id: 3
+            - title: Local Animal Shelter
+
+### Project Detail [GET /project/{projectId}]
+
+Fetch the details of a project. Takes the project ID or key as a parameter
+
++ Parameters
+    + projectId (required, string) - The Project ID or Key
+    
++ Response 200 (application/json)
+    - Attributes (ProjectDetail)
+
+    
+### Create Project [POST /project]
+
+Create a new project.
+
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        + title: New Project Title (required, string) - The title of the new project
+        + tagline (optional, string)
+        + summary (optional, string)
+        + goalAmount (optional, number)
+        + goalDate (string) - The target date for this project to be completely funded (ISO8601 format)
+
++ Response 201
+    - Attributes (Project)
+
+### Update a Project [PUT /project/{projectId}]
+
+Update a project.
+
++ Parameters
+    + projectId: 1 (required, number) - The ID of the project to update.
+
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        + title: New Project Title (required, string) - The title of the new project
+        + tagline (optional, string)
+        + summary (optional, string)
+        + goalAmount (optional, number)
+        + goalDate (string) - The target date for this project to be completely funded (ISO8601 format)
+        
++ Response 204
+    
+# Data Structures
+
+## User
+
++ email (string) - The user's email address
++ profileImage (Image) - The user's profile image
++ name (string) - The user's display name
++ accountType (enum[string]) - The user's account type
+    + Members
+        + regular (default) - Regular user
+        + pro - Pro user (paid account)
++ privacy (object) - The user's privacy settings
+    + profile (enum[string]) - The user's profile visiblity
+        + Members
+            + hidden - The user's profile is hidden
+            + public (default) - The user's profile is visible to anyone, links to the user's profile may appear on HeartCup
+            + link - The user's profile is only visible with a direct link
+    + donations (enum[string]) - The user's donation visiblity
+        + Members
+            + hidden - Do not show projects supported or donation amounts
+            + projects (default) - Only show projects the user supports
+            + public - Show projects and donation amounts
+            
+### StoredUser (User)
+
++ id: 1 (number) - The user ID
+
+## Project
+
++ title: The Outreach Project (string) - The project title
++ tagline: Sponsored by the Giving Keys (string) - The project tagline
++ thumbnail (Image) - The project thumbnail
++ banner (Image) - The project banner
++ address (Address) - The project address
++ organization (Organization) - The organization that owns this project
++ summary (string) - The project summary
++ goalAmount: 10000 (number) - The project goal amount in hearts (integer)
++ goalDate: `2016-05-05T12:30:00` (string) - The target date for this project to be completely funded (ISO8601 format)
+
+### StoredProject (Project)
+
++ id: 55 (number) - The project ID
++ key: `the-outreach-project` (string) - The project URL key
++ fundedAmount: 500 (number) - The total funds collected for the project in hearts (integer)
++ supportersTotal: 65 (number) - The total number of supporters for this project
+
+#### ProjectDetail (StoredProject)
+
++ who: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
++ what: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
++ where: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
++ why: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
++ organization (OrganizationDetail) - The organization that owns this project
++ supporters (array[User]) - An array of project supporters
+    + (User)
+        + id: 1
+    + (User)
+        + id: 2
+    + (User)
+        + id: 3
++ activity (array[ProjectActivity]) - An array of project activity
+    + (ProjectActivity)
+        + id: 1
+    + (ProjectActivity)
+        + id: 2
+    + (ProjectActivity)
+        + id: 3
+        
+## Organization
+
++ id: 1 (number) - The organization ID
++ name (string) - The name of the organization
++ key (string) - The organization URL key
+
+### OrganizationDetail (Organization)
+
++ members (array[OrganizationMember]) - An array of organization members
+
+## OrganizationMember
+
++ userId: 1 (number) - The user's ID
++ role: owner (enum[string]) - The user's role in the organization
+    + Members
+        + owner
+        + admin
+        + member
+
+## Address
+
++ id: 1 (number) - The address ID
++ line1 (string) - Address line 1
++ line2 (string) - Address line 2
++ locality (string) - The address locality or city
++ region (string) - The address region, state or province
++ postcode (string) - The address postcode
++ countryCode (string) - The address country code
+
+## Image
+
++ width: 150 (number) - The image width
++ height: 150 (number) - The image height
++ url (string) - The image URL
+
+### Activity
+
++ id: 1 (number) - The activity ID
++ entityId: 2 (optional, number) - Optional ID of related entity
++ type: donation (string) - The type of activity
++ description (string) - The activity description
++ createdDate: `2016-05-05T12:30:00` (string) - The activty date (ISO8601 format)
+
+#### ProjectActivity (Activity)
+
++ projectId: 1 (number) - The project ID
