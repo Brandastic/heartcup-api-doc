@@ -171,24 +171,23 @@ Update a project.
 + following (array[number]) - The users and projects that the current user follows
 + paymentMethod (object) - Object representing the user's payment card
 + ownedProjects (array[number]) - Array representing projects created and owned by the user
-+ school (string) - The user's associated school
++ school (enum[string]) - The user's associated school
 + passwordHash (string) - A hash value representing the user's password
 + coreValues (string) - The user's core value preferences
 + organizations (array[number]) - The organizations that the current user is a member of
 + newsletterOptIn (enum[string]) - User's opt-in option for the newsletter
-+ taxEIN (string) - The user's tax employer identification number
 
 ### StoredUser (User)
 
 + id: 1 (number) - The user ID
-+ key (string) - URL key to access user
++ key `the-profile-key` (string) - URL key to access user
 + posts (array[ProfileActivity]) - Array of user's profile activity
 + accountBalance (number) - The user's account balance (in hearts?)
 + backers (array[number]) - Array of user IDs of people who support the current user's owned projects
 + totalDonated (number) - Aggregated amount representing how much the user has donated to various projects
 + totalReceived (number) - Aggregated amount representing how much the user has received in support for owned projects
-+ notifications (string) - NEED A DESCRIPTION
-+ isActive (enum[string]) - Value representing whether or not the user account is still active
++ notifications (string) - PENDING UPDATE - serialized array of notifications
++ isActive (enum[number]) - Value representing whether or not the user account is still active
 
 ## Project
 
@@ -216,7 +215,7 @@ Update a project.
 + details (object) - Details of the project
 + supporters (array[number]) - Array representing users who support this project
 + currency (enum[string]) - The type of currency expected for the project (USD default) 
-+ taxExemptStatus (enum[string]) - The projects tax exemption status
++ taxExemptStatus (enum[number]) - The projects tax exemption status
 + approved (enum[string]) - Value representing the approval status of the project
 + active (enum[string]) - Value representing the state of the project, whether it is active or not
 + categories (array[number]) - The categories associated with this project
@@ -236,21 +235,21 @@ Update a project.
 
 + width: 150 (number) - The image width
 + height: 150 (number) - The image height
-+ url (string) - The image URL
++ url: `http://lorempixel.com/800/600/cats/` (string) - The image URL
 
 ## UrlKey
 
 + id (number) - The UrlKey ID
-+ key (string) - Hashed string representing the url
++ key: `the-url-key` (string) - Hashed string representing the url
 
 ## Activity
 
 + id: 1 (number) - The activity ID
 + entityId: 2 (optional, number) - Optional ID of related entity
-+ type: donation (string) - The type of activity
++ type (enum[string]) - The type of activity - project update, profile post
 + description (string) - The activity description
 + createdDate: `2016-05-05T12:30:00` (string) - The activity date (ISO8601 format)
-+ status (number) - NEED DESCRIPTION
++ status (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
 
 ### ProjectActivity (Activity)
 
@@ -265,7 +264,7 @@ Update a project.
 
 + id (number) - The project ID associated with the transaction
 + userId (number) - The ID of the user who created the transaction
-+ type (number) - 
++ type (enum[number]) - Donation / Payment
 + timestamps (string) - The transaction date (ISO8601 format)
 + details (object) - Transaction receipt
 
@@ -282,7 +281,12 @@ Update a project.
 ## Role
 
 + id (number) - The ID for the role
-+ title (string) - The title of the role
++ title (enum[string]) - The title of the role
+    + Members
+        + owner - Project/Organization Owner
+        + moderator - Can post/approve content for project/organization.
+        + editor - Can post content for project/organization to moderation queue.
+        + member (default) - Can view project/organization.
 
 ## Category
 
@@ -291,18 +295,19 @@ Update a project.
 ### StoredCategory(Category)
 
 + id (number) - The ID of the stored category
-+ key (string) - The key corresponding to the category
++ key: `the-category-key` (string) - The URL key corresponding to the category
 
 ## Organization
 
 + id: 1 (number) - The organization ID
 + name (string) - The name of the organization
-+ key (string) - The key corresponding to the organization
-+ type (number) - NEED DESCRIPTION
++ key: `the-organization-key` (string) - The URL key corresponding to the organization
++ type (number) - Charity / Business / Group / Etc
 
 ### OrganizationDetail (Organization)
 
 + members (array[number]) - An array of organization members
++ taxEIN (string) - The tax employer identification number for charitable organization
 
 ## OrganizationMember
 
