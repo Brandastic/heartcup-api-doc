@@ -168,10 +168,27 @@ Update a project.
             + hidden - Do not show projects supported or donation amounts
             + projects (default) - Only show projects the user supports
             + public - Show projects and donation amounts
-            
++ following (array[StoredUser.Id, StoredProject.Id]) - The users and projects that the current user follows
++ paymentMethod (object) - Object representing the user's payment card
++ ownedProjects (array[StoredProject.id]) - Array representing projects created and owned by the user
++ school (string) - The user's associated school
++ passwordHash (string) - A hash value representing the user's password
++ coreValues (string) - The user's core value preferences
++ organizations (array[Organization.id]) - The organizations that the current user is a member of
++ newsletterOptIn (enum[string]) - User's opt-in option for the newsletter
++ taxEIN (string) - The user's tax employer identification number
+
 ### StoredUser (User)
 
 + id: 1 (number) - The user ID
++ key (UrlKey.id) - URL key to access user
++ posts (array[ProfileActivity]) - Array of user's profile activity
++ accountBalance (number) - The user's account balance (in hearts?)
++ backers (array[StoredUser.Id]) - Array of user IDs of people who support the current user's owned projects
++ totalDonated (number) - Aggregated amount representing how much the user has donated to various projects
++ totalReceived (number) - Aggregated amount representing how much the user has received in support for owned projects
++ notifications () - 
++ isActive (enum[string]) - Value representing whether or not the user account is still active
 
 ## Project
 
@@ -180,58 +197,30 @@ Update a project.
 + thumbnail (Image) - The project thumbnail
 + banner (Image) - The project banner
 + address (Address) - The project address
-+ organization (Organization) - The organization that owns this project
++ organizationId (Organization.id) - The id of the organization that owns this project
 + summary (string) - The project summary
-+ goalAmount: 10000 (number) - The project goal amount in hearts (integer)
++ goalAmount: 10000 (number) - The project goal amount in hearts
 + goalDate: `2016-05-05T12:30:00` (string) - The target date for this project to be completely funded (ISO8601 format)
++ ownerId: (StoredUser.Id or Organization.Id) - The user or organization ID of the project creator and owner
 
 ### StoredProject (Project)
 
 + id: 55 (number) - The project ID
-+ key: `the-outreach-project` (string) - The project URL key
++ key: `the-outreach-project` (UrlKey.id) - The project URL key
 + fundedAmount: 500 (number) - The total funds collected for the project in hearts (integer)
 + supportersTotal: 65 (number) - The total number of supporters for this project
 
 #### ProjectDetail (StoredProject)
 
-+ who: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
-+ what: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
-+ where: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
-+ why: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit turpis nec leo volutpat finibus. Mauris dignissim egestas pellentesque. Donec sed tincidunt turpis, non sollicitudin lectus. Nulla feugiat mattis est, vel faucibus felis varius vel. Nulla facilisi. Nullam augue sapien, scelerisque sed eros convallis, malesuada elementum est. Fusce a felis metus. (string)
-+ organization (OrganizationDetail) - The organization that owns this project
-+ supporters (array[User]) - An array of project supporters
-    + (User)
-        + id: 1
-    + (User)
-        + id: 2
-    + (User)
-        + id: 3
-+ activity (array[ProjectActivity]) - An array of project activity
-    + (ProjectActivity)
-        + id: 1
-    + (ProjectActivity)
-        + id: 2
-    + (ProjectActivity)
-        + id: 3
-        
-## Organization
-
-+ id: 1 (number) - The organization ID
-+ name (string) - The name of the organization
-+ key (string) - The organization URL key
-
-### OrganizationDetail (Organization)
-
-+ members (array[OrganizationMember]) - An array of organization members
-
-## OrganizationMember
-
-+ userId: 1 (number) - The user's ID
-+ role: owner (enum[string]) - The user's role in the organization
-    + Members
-        + owner
-        + admin
-        + member
++ description (string) - Description of the project
++ details (string/json object) - Details of the project
++ supporters (array[StoredUser.id]) - Array representing users who support this project
++ currency (string/enum) - The type of currency expected for the project (USD default) 
++ taxExemptStatus (enum[string]) - The projects tax exemption status
++ approved (enum[string]) - Value representing the approval status of the project
++ active (enum[string]) - Value representing the state of the project, whether it is active or not
++ categories (array[StoredCategory.id]) - The categories associated with this project
++ updates (array[ProjectActivity]) - The status updates associated with the current project
 
 ## Address
 
@@ -249,14 +238,87 @@ Update a project.
 + height: 150 (number) - The image height
 + url (string) - The image URL
 
-### Activity
+## UrlKey
+
++ id (number) - The UrlKey ID
++ key (string) - Hashed string representing the url
+
+## Activity
 
 + id: 1 (number) - The activity ID
 + entityId: 2 (optional, number) - Optional ID of related entity
 + type: donation (string) - The type of activity
 + description (string) - The activity description
 + createdDate: `2016-05-05T12:30:00` (string) - The activity date (ISO8601 format)
++ status (number) - 
 
-#### ProjectActivity (Activity)
+### ProjectActivity (Activity)
 
-+ projectId: 1 (number) - The project ID
++ projectId: 1 (StoredProject.id) - The project ID associated with the activity
++ userId (number) - The ID of the user who created the activity
+
+### ProfileActivity(Activity) 
+
++ userId (number) - The user ID associated with the activity
+
+## Donation
+
++ id: (number) - The donation ID
++ userId: (StoredUser.id) - The ID of the user who made the donation
++ amount: (number) - The donation amount 
++ currency: (number/Hearts) - The currency type of the donation
++ type: (ProjectDetail.TaxExemptStatus) - The donation type, tax-exempt or not
++ projectId: (StoredProject.id) - The project ID associated with the donation
++ timestamps (string) - The donation date (ISO8601 format) 
++ transactionId: (Transaction.id) - The ID of the transaction related to the current donation
+
+## Transactions
+
++ id (StoredProject.id) - The project ID associated with the transaction
++ userId (StoredUser.id) - The ID of the user who created the transaction
++ type (number) - 
++ timestamps (string) - The transaction date (ISO8601 format)
++ details (JSON) - Transaction receipt
+
+## Permission
+
++ userId: (StoredUser.id) - The ID of the user that owns the permissions
++ roleId: (Role.id) - The ID of the type of role 
++ projectId: (StoredProject.id) - The project ID of the project that owns the permissions
+ 
+## Role
+
++ id: (number) - The ID for the role
++ title: (string) - The title of the role (owner, editor, admin)
+
+## Category
+
++ name: (string) - The name of the category
+
+### StoredCategory(Category)
+
++ id (number) - THe ID of the stored category
++ key (UrlKey.id) - The key corresponding to the category
+
+
+## Organization
+
++ id: 1 (number) - The organization ID
++ name (string) - The name of the organization
++ key (UrlKey.id) - The key corresponding to the organization
++ type (number) - 
+
+### OrganizationDetail (Organization)
+
++ members: (array[OrganizationMember]) - An array of organization members
+
+## OrganizationMember
+
++ id (number) - The ID of the organization member
++ organizationId (Organization.id) - The ID of the organization that the member is a part of
++ userId 1 (StoredUser.id) - The ID of the stored user 
++ roleId (Role.id) - The ID indicating the user's role type in the organization
+    + Members
+        + owner
+        + admin
+        + member
