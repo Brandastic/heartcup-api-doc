@@ -175,7 +175,10 @@ Update a project.
 + password (string) - A hash value representing the user's password
 + coreValues (string) - The user's core value preferences
 + organizations (array[number]) - The organizations that the current user is a member of
-+ newsletterOptIn (enum[string]) - User's opt-in option for the newsletter
++ newsletterOptIn (enum[number]) - User's opt-in option for the newsletter
+    + Members
+        + 0 - Opt-Out / Disabled
+        + 1 - Opt-In / Enabled
 
 ### StoredUser (User)
 
@@ -188,6 +191,9 @@ Update a project.
 + totalReceived (number) - Aggregated amount representing how much the user has received in support for owned projects
 + notifications (string) - PENDING UPDATE - serialized array of notifications
 + isActive: 1 (enum[number]) - Value representing whether or not the user account is still active
+    + Members
+        + 0 - Inactive / Disabled
+        + 1 - Active/ Enabled
 
 ## Project
 
