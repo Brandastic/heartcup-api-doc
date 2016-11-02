@@ -164,7 +164,7 @@ Update a project.
 
 + email: `user@example.com` (string) - The user's email address
 + profileImage (Image) - The user's profile image
-+ name: "Sample User" (string) - The user's display name
++ name: Sample User (string) - The user's display name
 + accountType (enum[string]) - The user's account type
     + Members
         + regular (default) - Regular user
@@ -185,9 +185,9 @@ Update a project.
 + ownedProjects (array[number]) - Array representing projects created and owned by the user
 + school (enum[string]) - The user's associated school
     + Members
-        + "Sample School 1" (default)
-        + "Sample School 2"
-        + "Sample School 3"
+        + Sample School 1 (default)
+        + Sample School 2
+        + Sample School 3
 + password: `$2a$04$06uhTK8HPz17FXkrW8mf.OORzstmPjHxLDEfyrEtKuXBYj3Vt.igu` (string) - A hash value representing the user's password
 + coreValues: `Core Value 1, Core Value 2, Core Value 3` (string) - The user's core value preferences
 + organizations (array[number]) - The organizations that the current user is a member of
@@ -217,7 +217,7 @@ Update a project.
 + banner (Image) - The project banner
 + address (Address) - The project address
 + organizationId: 1 (number) - The id of the organization that owns this project
-+ summary: "Sample Project Summary" (string) - The project summary
++ summary: Sample Project Summary (string) - The project summary
 + goalAmount: 10000 (number) - The project goal amount in hearts
 + goalDate: `2016-05-05T12:30:00` (string) - The target date for this project to be completely funded (ISO8601 format)
 + ownerId: 1 (number) - The user or organization ID of the project creator and owner
@@ -231,12 +231,12 @@ Update a project.
 
 #### ProjectDetail (StoredProject)
 
-+ description: "Basic Project Description" (string) - Description of the project
++ description: Basic Project Description (string) - Description of the project
 + details (object) - Details of the project
 + supporters (array[number]) - Array representing users who support this project
 + currency (enum[string]) - The type of currency expected for the project (USD default)
     + Members
-        + "USD" (default)
+        + USD (default)
 + taxExemptStatus (enum[number]) - The projects tax exemption status
     + Members
         + 0 (default) - Non Charitable Project - For Profit
@@ -256,12 +256,12 @@ Update a project.
 ## Address
 
 + id: 1 (number) - The address ID
-+ line1: "123 Someplace Nice" (string) - Address line 1
++ line1: 123 Someplace Nice (string) - Address line 1
 + line2 (string) - Address line 2
-+ locality: "Sunny" (string) - The address locality or city
-+ region: "CA" (string) - The address region, state or province
-+ postcode: "90210" (string) - The address postcode
-+ countryCode: "USA" (string) - The address country code
++ locality: Sunny (string) - The address locality or city
++ region: CA (string) - The address region, state or province
++ postcode: 90210 (string) - The address postcode
++ countryCode: USA (string) - The address country code
 
 ## Image
 
@@ -287,7 +287,7 @@ Update a project.
     + Members
         + 0 - ProfileActivity - Profile Post
         + 1 - ProjectActivity - Project Update
-+ description: "Dummy Post Content" (string) - The activity description
++ description: Dummy Post Content (string) - The activity description
 + createdDate: `2016-05-05T12:30:00` (string) - The activity date (ISO8601 format)
 + status: 1 (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
 
@@ -335,7 +335,7 @@ Update a project.
 
 ## Category
 
-+ name: "Sample Category"  (string) - The name of the category
++ name: Sample Category  (string) - The name of the category
 
 ### StoredCategory(Category)
 
@@ -345,7 +345,7 @@ Update a project.
 ## Organization
 
 + id: 1 (number) - The organization ID
-+ name: "Sample Organization" (string) - The name of the organization
++ name: Sample Organization (string) - The name of the organization
 + key: 1 (number) - The ID of the URL key corresponding to the organization
 + type: 1 (number) - Charity / Business / Group / Etc
 
