@@ -166,6 +166,7 @@ Update a project.
 + profileImage (Image) - The user's profile image
 + name: Sample User (string) - The user's display name
 + accountType (enum[string]) - The user's account type
+    + Default: regular
     + Members
         + regular (default) - Regular user
         + pro - Pro user (paid account)
@@ -174,9 +175,10 @@ Update a project.
         + Default : public
         + Members
             + hidden - The user's profile is hidden
-            + public - The user's profile is visible to anyone, links to the user's profile may appear on HeartCup
+            + public (default) - The user's profile is visible to anyone, links to the user's profile may appear on HeartCup
             + link - The user's profile is only visible with a direct link
     + donations (enum[string]) - The user's donation visiblity
+        + Default: projects
         + Members
             + hidden - Do not show projects supported or donation amounts
             + projects (default) - Only show projects the user supports
@@ -185,6 +187,7 @@ Update a project.
 + paymentMethod (object) - Object representing the user's payment card
 + ownedProjects (array[number]) - Array representing projects created and owned by the user
 + school (enum[string]) - The user's associated school
+    + Default : Sample School 1
     + Members
         + Sample School 1 (default)
         + Sample School 2
@@ -193,6 +196,7 @@ Update a project.
 + coreValues: `Core Value 1, Core Value 2, Core Value 3` (string) - The user's core value preferences
 + organizations (array[number]) - The organizations that the current user is a member of
 + newsletterOptIn (enum[number]) - User's opt-in option for the newsletter
+    + Default: 1
     + Members
         + 0 - Opt-Out / Disabled
         + 1 (default) - Opt-In / Enabled
@@ -206,6 +210,7 @@ Update a project.
 + totalDonated: 100.00 (number) - Aggregated amount representing how much the user has donated to various projects
 + totalReceived: 100.00 (number) - Aggregated amount representing how much the user has received in support for owned projects
 + isActive (enum[number]) - Value representing whether or not the user account is still active
+    + Default: 1
     + Members
         + 0 - Inactive / Disabled
         + 1 (default) - Active/ Enabled
@@ -236,18 +241,22 @@ Update a project.
 + details (object) - Details of the project
 + supporters (array[number]) - Array representing users who support this project
 + currency (enum[string]) - The type of currency expected for the project (USD default)
+    + Default: USD
     + Members
         + USD (default)
 + taxExemptStatus (enum[number]) - The projects tax exemption status
+    + Default: 0
     + Members
         + 0 (default) - Non Charitable Project - For Profit
         + 1 - Chartiable Project - Non Profit
 + approved (enum[string]) - Value representing the approval status of the project
+    + Default: 0
     + Members
         + 0 (default) - Pending Approval
         + 1 - Project Approved
         + 2 - Project Disapproved
 + active (enum[string]) - Value representing the state of the project, whether it is active or not
+    + Default: 1
     + Members
         + 0 - Inactive / Disabled
         + 1 (default) - Active
@@ -275,6 +284,7 @@ Update a project.
 + id: 1 (number) - The UrlKey ID
 + key: `the-url-key` (string) - Hashed string representing the url
 + type (enum[number]) - The INT value corresponding to the type of entity to which this key belong
+    + Default: 0
     + Members
         + 0 (default) - Project
         + 1 - Organization
@@ -308,6 +318,7 @@ Update a project.
 + id: 1 (number) - The project ID associated with the transaction
 + userId: 1 (number) - The ID of the user who created the transaction
 + type (enum[number]) - Donation / Payment
+    + Default: 1
     + Members
         + 0 - Donation
         + 1 (default) - Payment
@@ -328,6 +339,7 @@ Update a project.
 
 + id: 1 (number) - The ID for the role
 + title (enum[string]) - The title of the role
+    + Default: member
     + Members
         + owner - Project/Organization Owner
         + moderator - Can post/approve content for project/organization.
