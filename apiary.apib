@@ -180,14 +180,14 @@ Update a project.
 ### StoredUser (User)
 
 + id: 1 (number) - The user ID
-+ key `the-profile-key` (string) - URL key to access user
++ key(number) - The ID of the URL key corresponding to the user profile
 + posts (array[ProfileActivity]) - Array of user's profile activity
 + accountBalance (number) - The user's account balance (in hearts?)
 + backers (array[number]) - Array of user IDs of people who support the current user's owned projects
 + totalDonated (number) - Aggregated amount representing how much the user has donated to various projects
 + totalReceived (number) - Aggregated amount representing how much the user has received in support for owned projects
 + notifications (string) - PENDING UPDATE - serialized array of notifications
-+ isActive (enum[number]) - Value representing whether or not the user account is still active
++ isActive: 1 (enum[number]) - Value representing whether or not the user account is still active
 
 ## Project
 
@@ -205,7 +205,7 @@ Update a project.
 ### StoredProject (Project)
 
 + id: 55 (number) - The project ID
-+ key: `the-outreach-project` (string) - The project URL key
++ key(number) - The ID of the URL key corresponding to the project
 + fundedAmount: 500 (number) - The total funds collected for the project in hearts (integer)
 + supportersTotal: 65 (number) - The total number of supporters for this project
 
@@ -241,15 +241,20 @@ Update a project.
 
 + id (number) - The UrlKey ID
 + key: `the-url-key` (string) - Hashed string representing the url
++ type (number) - The INT value corresponding to the type of entity to which this key belong
++ entityId (number) - The ID of the object to which this key belong
 
 ## Activity
 
 + id: 1 (number) - The activity ID
 + entityId: 2 (optional, number) - Optional ID of related entity
 + type (enum[string]) - The type of activity - project update, profile post
-+ description (string) - The activity description
+    + Members
+        + 0 - ProfileActivity - Profile Post
+        + 1 - ProjectActivity - Project Update
++ description: "Dummy Post Content" (string) - The activity description
 + createdDate: `2016-05-05T12:30:00` (string) - The activity date (ISO8601 format)
-+ status (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
++ status: 1 (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
 
 ### ProjectActivity (Activity)
 
@@ -296,13 +301,13 @@ Update a project.
 ### StoredCategory(Category)
 
 + id (number) - The ID of the stored category
-+ key: `the-category-key` (string) - The URL key corresponding to the category
++ key(number) - The ID of the URL key  corresponding to the category
 
 ## Organization
 
 + id: 1 (number) - The organization ID
 + name (string) - The name of the organization
-+ key: `the-organization-key` (string) - The URL key corresponding to the organization
++ key (number) - The ID of the URL key corresponding to the organization
 + type (number) - Charity / Business / Group / Etc
 
 ### OrganizationDetail (Organization)
