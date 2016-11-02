@@ -162,9 +162,9 @@ Update a project.
 
 ## User
 
-+ email (string) - The user's email address
++ email: `user@example.com` (string) - The user's email address
 + profileImage (Image) - The user's profile image
-+ name (string) - The user's display name
++ name: "Sample User" (string) - The user's display name
 + accountType (enum[string]) - The user's account type
     + Members
         + regular (default) - Regular user
@@ -184,28 +184,30 @@ Update a project.
 + paymentMethod (object) - Object representing the user's payment card
 + ownedProjects (array[number]) - Array representing projects created and owned by the user
 + school (enum[string]) - The user's associated school
-+ password (string) - A hash value representing the user's password
-+ coreValues (string) - The user's core value preferences
+    + Members
+        + "Sample School 1" (default)
+        + "Sample School 2"
+        + "Sample School 3"
++ password: `$2a$04$06uhTK8HPz17FXkrW8mf.OORzstmPjHxLDEfyrEtKuXBYj3Vt.igu` (string) - A hash value representing the user's password
++ coreValues: `Core Value 1, Core Value 2, Core Value 3` (string) - The user's core value preferences
 + organizations (array[number]) - The organizations that the current user is a member of
 + newsletterOptIn (enum[number]) - User's opt-in option for the newsletter
     + Members
         + 0 - Opt-Out / Disabled
-        + 1 - Opt-In / Enabled
+        + 1 (default) - Opt-In / Enabled
 
 ### StoredUser (User)
 
 + id: 1 (number) - The user ID
-+ key(number) - The ID of the URL key corresponding to the user profile
 + posts (array[ProfileActivity]) - Array of user's profile activity
-+ accountBalance (number) - The user's account balance (in hearts?)
++ accountBalance: 100.00 (number) - The user's account balance (in hearts?)
 + backers (array[number]) - Array of user IDs of people who support the current user's owned projects
-+ totalDonated (number) - Aggregated amount representing how much the user has donated to various projects
-+ totalReceived (number) - Aggregated amount representing how much the user has received in support for owned projects
-+ notifications (string) - PENDING UPDATE - serialized array of notifications
-+ isActive: 1 (enum[number]) - Value representing whether or not the user account is still active
++ totalDonated: 100.00 (number) - Aggregated amount representing how much the user has donated to various projects
++ totalReceived: 100.00 (number) - Aggregated amount representing how much the user has received in support for owned projects
++ isActive (enum[number]) - Value representing whether or not the user account is still active
     + Members
         + 0 - Inactive / Disabled
-        + 1 - Active/ Enabled
+        + 1 (default) - Active/ Enabled
 
 ## Project
 
@@ -214,40 +216,52 @@ Update a project.
 + thumbnail (Image) - The project thumbnail
 + banner (Image) - The project banner
 + address (Address) - The project address
-+ organizationId (number) - The id of the organization that owns this project
-+ summary (string) - The project summary
++ organizationId: 1 (number) - The id of the organization that owns this project
++ summary: "Sample Project Summary" (string) - The project summary
 + goalAmount: 10000 (number) - The project goal amount in hearts
 + goalDate: `2016-05-05T12:30:00` (string) - The target date for this project to be completely funded (ISO8601 format)
-+ ownerId (number) - The user or organization ID of the project creator and owner
++ ownerId: 1 (number) - The user or organization ID of the project creator and owner
 
 ### StoredProject (Project)
 
 + id: 55 (number) - The project ID
-+ key(number) - The ID of the URL key corresponding to the project
++ key: 1 (number) - The ID of the URL key corresponding to the project
 + fundedAmount: 500 (number) - The total funds collected for the project in hearts (integer)
 + supportersTotal: 65 (number) - The total number of supporters for this project
 
 #### ProjectDetail (StoredProject)
 
-+ description (string) - Description of the project
++ description: "Basic Project Description" (string) - Description of the project
 + details (object) - Details of the project
 + supporters (array[number]) - Array representing users who support this project
-+ currency (enum[string]) - The type of currency expected for the project (USD default) 
++ currency (enum[string]) - The type of currency expected for the project (USD default)
+    + Members
+        + "USD" (default)
 + taxExemptStatus (enum[number]) - The projects tax exemption status
+    + Members
+        + 0 (default) - Non Charitable Project - For Profit
+        + 1 - Chartiable Project - Non Profit
 + approved (enum[string]) - Value representing the approval status of the project
+    + Members
+        + 0 (default) - Pending Approval
+        + 1 - Project Approved
+        + 2 - Project Disapproved
 + active (enum[string]) - Value representing the state of the project, whether it is active or not
+    + Members
+        + 0 - Inactive / Disabled
+        + 1 (default) - Active
 + categories (array[number]) - The categories associated with this project
 + updates (array[ProjectActivity]) - The status updates associated with the current project
 
 ## Address
 
 + id: 1 (number) - The address ID
-+ line1 (string) - Address line 1
++ line1: "123 Someplace Nice" (string) - Address line 1
 + line2 (string) - Address line 2
-+ locality (string) - The address locality or city
-+ region (string) - The address region, state or province
-+ postcode (string) - The address postcode
-+ countryCode (string) - The address country code
++ locality: "Sunny" (string) - The address locality or city
++ region: "CA" (string) - The address region, state or province
++ postcode: "90210" (string) - The address postcode
++ countryCode: "USA" (string) - The address country code
 
 ## Image
 
@@ -257,10 +271,13 @@ Update a project.
 
 ## UrlKey
 
-+ id (number) - The UrlKey ID
++ id: 1 (number) - The UrlKey ID
 + key: `the-url-key` (string) - Hashed string representing the url
-+ type (number) - The INT value corresponding to the type of entity to which this key belong
-+ entityId (number) - The ID of the object to which this key belong
++ type (enum[number]) - The INT value corresponding to the type of entity to which this key belong
+    + Members
+        + 0 (default) - Project
+        + 1 - Organization
++ entityId: 1 (number) - The ID of the object to which this key belong (StoredProject.id, etc)
 
 ## Activity
 
@@ -274,37 +291,41 @@ Update a project.
 + createdDate: `2016-05-05T12:30:00` (string) - The activity date (ISO8601 format)
 + status: 1 (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
 
+
 ### ProjectActivity (Activity)
 
 + projectId: 1 (number) - The project ID associated with the activity
-+ userId (number) - The ID of the user who created the activity
++ userId: 1 (number) - The ID of the user who created the activity
 
 ### ProfileActivity(Activity) 
 
-+ userId (number) - The user ID associated with the activity
-+ organizationId (number) - The organization ID associated with the activity
++ userId: 1 (number) - The user ID associated with the activity
++ organizationId: 1 (number) - The organization ID associated with the activity
 
 ## Transaction
 
-+ id (number) - The project ID associated with the transaction
-+ userId (number) - The ID of the user who created the transaction
++ id: 1 (number) - The project ID associated with the transaction
++ userId: 1 (number) - The ID of the user who created the transaction
 + type (enum[number]) - Donation / Payment
+    + Members
+        + 0 - Donation
+        + 1 (default) - Payment
 + timestamps (string) - The transaction date (ISO8601 format)
 + details (object) - Transaction receipt
 
 ### Donation(Transaction)
 
-+ projectId (number) - The project ID associated with the donation
++ projectId: 1 (number) - The project ID associated with the donation
 
 ## Permission
 
-+ userId (number) - The ID of the user that owns the permissions
-+ roleId (number) - The ID of the type of role 
-+ projectId (number) - The project ID of the project that owns the permissions
++ userId: 1 (number) - The ID of the user that owns the permissions
++ roleId: 1 (number) - The ID of the type of role 
++ projectId: 1 (number) - The project ID of the project that owns the permissions
 
 ## Role
 
-+ id (number) - The ID for the role
++ id: 1 (number) - The ID for the role
 + title (enum[string]) - The title of the role
     + Members
         + owner - Project/Organization Owner
@@ -314,28 +335,28 @@ Update a project.
 
 ## Category
 
-+ name (string) - The name of the category
++ name: "Sample Category"  (string) - The name of the category
 
 ### StoredCategory(Category)
 
-+ id (number) - The ID of the stored category
-+ key(number) - The ID of the URL key  corresponding to the category
++ id: 1 (number) - The ID of the stored category
++ key: 1 (number) - The ID of the URL key  corresponding to the category
 
 ## Organization
 
 + id: 1 (number) - The organization ID
-+ name (string) - The name of the organization
-+ key (number) - The ID of the URL key corresponding to the organization
-+ type (number) - Charity / Business / Group / Etc
++ name: "Sample Organization" (string) - The name of the organization
++ key: 1 (number) - The ID of the URL key corresponding to the organization
++ type: 1 (number) - Charity / Business / Group / Etc
 
 ### OrganizationDetail (Organization)
 
 + members (array[number]) - An array of organization members
-+ taxEIN (string) - The tax employer identification number for charitable organization
++ taxEIN: `00-0000000` (string) - The tax employer identification number for charitable organization
 
 ## OrganizationMember
 
-+ id (number) - The ID of the organization member
-+ organizationId (number) - The ID of the organization that the member is a part of
++ id: 1 (number) - The ID of the organization member
++ organizationId: 1 (number) - The ID of the organization that the member is a part of
 + userId: 1 (number) - The ID of the stored user 
-+ roleId (number) - The ID indicating the user's role type in the organization
++ roleId: 1 (number) - The ID indicating the user's role type in the organization
