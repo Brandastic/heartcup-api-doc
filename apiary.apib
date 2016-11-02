@@ -31,9 +31,13 @@ Create a JWT token for the given user
     - Attributes
         - token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ` (string) - The JWT Token
         
-+ Response 400 (application/json)
++ Response 401 (application/json)
     - Attributes
         - message: Invalid email address or password (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Authentication Failed (string) - The error message
 
 ### Register [POST /user]
 
@@ -49,6 +53,10 @@ Register a new user
 + Response 422 (application/json)
     - Attributes
         - message: User already exists (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to create user (string) - The error message
 
 ### Update [PUT /user/{user}]
 
@@ -128,6 +136,10 @@ Create a new project.
 
 + Response 201
     - Attributes (Project)
+    
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to create project (string) - The error message
 
 ### Update a Project [PUT /project/{projectId}]
 
