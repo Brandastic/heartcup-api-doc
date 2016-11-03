@@ -183,18 +183,14 @@ Update a project.
             + hidden - Do not show projects supported or donation amounts
             + projects (default) - Only show projects the user supports
             + public - Show projects and donation amounts
-+ following (array[number]) - The users and projects that the current user follows
++ followingUsers (array[StoredUser]) - The users that the current user follows
++ followingProjects (array[StoredProject]) - The projects that the current user follows
++ followingOrganizations (array[Organizations]) - The organizations that the current user follows
 + paymentMethod (object) - Object representing the user's payment card
-+ ownedProjects (array[number]) - Array representing projects created and owned by the user
-+ school (enum[string]) - The user's associated school
-    + Default : Sample School 1
-    + Members
-        + Sample School 1 (default)
-        + Sample School 2
-        + Sample School 3
-+ password: `$2a$04$06uhTK8HPz17FXkrW8mf.OORzstmPjHxLDEfyrEtKuXBYj3Vt.igu` (string) - A hash value representing the user's password
++ ownedProjects (array[StoredProject]) - Array representing projects created and owned by the user
++ school (School) - The user's associated school
 + coreValues: `Core Value 1, Core Value 2, Core Value 3` (string) - The user's core value preferences
-+ organizations (array[number]) - The organizations that the current user is a member of
++ organizations (array[Organizations]) - The organizations that the current user is a member of
 + newsletterOptIn (enum[number]) - User's opt-in option for the newsletter
     + Default: 1
     + Members
@@ -362,10 +358,12 @@ Update a project.
 + name: Sample Organization (string) - The name of the organization
 + key: 1 (number) - The ID of the URL key corresponding to the organization
 + type: 1 (number) - Charity / Business / Group / Etc
-
-### OrganizationDetail (Organization)
-
 + members (array[number]) - An array of organization members
+
+### School (Organization)
+
+### Charity (Organization)
+
 + taxEIN: `00-0000000` (string) - The tax employer identification number for charitable organization
 
 ## OrganizationMember
