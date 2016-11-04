@@ -19,6 +19,21 @@ Fetch the user details
     - Attributes
         - message: User does not exist (string) - The error message
 
+### Following [GET /user/{user}/following/{?type}]
+
+Fetch all users or projects that the current user follows
+
++ Parameters
+    + user (required) - The user ID or email address
+    + type (required) - The type of object the user is following (User/Project)
+
++ Response 200 (application/json)
+    - Attributes (array[StoredUser, StoredProject])
+    
++ Response 404 (application/json)
+    - Attributes
+        - message: User not found (string) - The error message
+
 ### Login [POST /user/token]
 
 Create a JWT token for the given user
@@ -38,6 +53,16 @@ Create a JWT token for the given user
 + Response 500 (application/json)
     - Attributes
         - message: Authentication Failed (string) - The error message
+        
+### Logout [POST /user/logout]
+
+Invalidate current user's JWT token
+
++ Response 204
+ 
++ Response 401 (application/json)
+    - Attributes
+        - message: Authentication failed (string) - The error message
 
 ### Register [POST /user]
 
@@ -57,6 +82,18 @@ Register a new user
 + Response 500 (application/json)
     - Attributes
         - message: Failed to create user (string) - The error message
+
+### Follow [POST /user/following/{?type,id_to_follow}]
+
+Add user or project to current user's following list
+
++ Parameters
+    + type (required) - The type of object being followed
+    + id_to_follow (required) - The ID of the object being followed
+
++ Response 200 (application/json)
+    - Attributes (User)
+
 
 ### Update [PUT /user/{user}]
 
@@ -85,6 +122,20 @@ Update the given user's profile image
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
+
+
+### Unfollow [DELETE /user/{user}/following/{?type,id_to_follow}]
+
+Remove user or project from the current user's following list
+
++ Parameters
+    + user (required) - The user ID or email address
+    + type (required) - The type of object to remove
+    + id_to_follow(required) - The ID of the object being removed
+    
++ Response 204
+
++ Response 404 (application/json) 
 
 ## Projects [/project]
 
@@ -121,7 +172,16 @@ Fetch the details of a project. Takes the project ID or key as a parameter
 + Response 200 (application/json)
     - Attributes (ProjectDetail)
 
+### Supporters [GET /project/{projectId}/supporters]
+
+Fetch an array of supporters for a project. Takes the project ID or key as a parameter.
+
++ Parameters
+    + projectId (required, string) - The Project ID or Key
     
++ Response 200 (application/json)
+    - Attributes (array[ProjectDetail])
+
 ### Create Project [POST /project]
 
 Create a new project.
@@ -157,7 +217,286 @@ Update a project.
         + goalDate (string) - The target date for this project to be completely funded (ISO8601 format)
         
 + Response 204
+
+### Delete a Project [DELETE /project/{projectId}]
+
+Delete a project
+
++ Parameters
+    + projectId (required, number) - The ID of the project to delete
     
++ Response 204 
+
++ Response 401
+
+## Search [/search]
+
+### Search [GET /search/{?query,type,orderBy,order,limit,page}]
+
+Produce a search for Users or Projects
+
++ Parameters
+    + query (optional) - Search query
+    + type (optional) - The type of object to search for (Project or User)
+    + orderBy (optional) - Attribute to order by
+    + order (optional) - DESC or ASC (default: DESC)
+    + limit (optional) - The maximum number to return
+    + page (optional) - The page to return, if limit is also given
+
++ Response 200 (application/json)
+    - Attributes (array)
+        - (Project)
+            - id: 1 (number)
+            - title: After School Programs
+        - (User)
+        - (Project)
+            - id: 3 (number)
+            - title: Local Animal Shelter
+
+## Categories [/category]
+
+### Get all Categories [GET /category]
+
+Fetch all categories
+
++ Response 200 (application/json)
+    + Attributes (array[Category])
+
+### Browse Category [GET /category/{?category_key,orderBy,order,limit,page}]
+
+List everything in a given category
+
++ Parameters
+    + category_key (optional) - The key for the category
+    + orderBy (optional) - Attribute to order by
+    + order (optional) - DESC or ASC (default: DESC)
+    + limit (optional) - The maximum number to return
+    + page (optional) - The page to return, if limit is also given
+    
++ Response 200 (application/json)
+    - Attributes (array[StoredCategory])
+
+### Update Category [PUT /category/{category}]
+
+Update a given category
+
++ Parameters
+    + category (required) - The ID or key for the category to update
+
++ Attributes (Category)
+    
++ Response 204
+    
+### Create Category [POST /category]
+
+Create a new category
+
++ Response 201 (application/json)
+
++ Response 409 (application/json)
+    + Attributes
+        - message: Category already exists (string) - The error message
+       
+### Delete Category [DELETE /category/{category}]
+        
+Delete the given category
+
++ Parameters 
+    + category (required) - The ID or key for the category to remove
+    
++ Response 204
+
+## Transactions [/paygate]
+
+### View Transaction [GET /paygate/{transaction}]
+
+Fetch details for a transaction
+
++ Parameters
+    + transaction (required) - The ID of the transaction
+    
++ Response 200 (application/json)
+    + Attributes (Transaction)
+
+### View Donation [GET /paygate/donate/{donation}]
+
+Fetch the donation record
+
++ Parameters
+    + donation (required) - The ID of the donation
+    
++ Response 200 (application/json)
+    + Attributes (Donation)
+    
+### Update Transaction [PUT /paygate/{transaction}]
+
+Update the given transaction
+
++ Parameters
+    + transaction (required) - The ID of the transaction to update
+
++ Attributes (Transaction)
+
++ Response 204
+
+### Update Donation [PUT /paygate/donate/{donation}]
+
+Update the given donation
+
++ Parameters 
+    + donation (required) - The ID of the donation to update
+
++ Attributes (Donation)
+
++ Response 204
+
+### Buy Hearts [POST /paygate]
+
+Purchase Hearts
+
++ Response 200 (application/json)
+    + Attributes (Transaction)
+
++ Response 400
+
+### Donate [POST /paygate/donate/{donation}]
+
+Donate to a project
+
++ Parameters
+    + donation (required) - Project ID to submit donation to
+
++ Response 200 (application/json)
+    + Attributes (Donation)
+
++ Response 400
+
+## Organization [/organization]
+
+### Get All Organizations [GET /organization]
+
+Fetch all organizations
+
++ Response 200 (application/json)
+    + Attributes (array[Organization])
+
+### Get Organization [GET /organization/{organization}]
+
+Fetch the given organization
+
++ Parameters 
+    + organization (required) - The ID or key of the organization to retrieve
+    
++ Response 200 (application/json)
+    + Attributes (Organization)
+
+### Update Organization [PUT /organization/{organization}]
+
+Update the given organization
+
++ Parameters
+    + organization (required) - The ID or key of the organization to update
+    
++ Response 204
+
+### Create Organization [POST /organization]
+
+Create a new organization
+
++ Response 201 (application/json)
+    + Attributes (Organization)
+
++ Response 409 (application/json)
+    + Attributes
+        + message: Organization already exists (string) - The error message
+    
+### Delete Organization [DELETE /organization/{organization}]
+
+Soft delete given organization
+
++ Response 204
+
+## Activity [/activity]
+
+### Get Post [GET /activity/{id}]
+
+Get a post for a given entity (User, Project, Organization)
+
++ Parameters 
+    + id - The ID or key for the given entity 
+    
++ Response 200 (application/json)
+    + Attributes (Activity)
+
+### Get Post By Entity [GET /activity/{?type,entity_id}]
+
+Get post by given entity
+
++ Parameters
+    + type - The activity type
+    + entity_id - The ID of the entity
+    
++ Response 200 (application/json)
+    + Attributes (Activity)
+
+### Create Post [POST /activity]
+
+Create a new post
+
++ Response 201
+    + Attributes (Activity)
+    
+### Update Post [PUT /activity/{activity}]
+
+Update the given activity
+
++ Parameters
+    + activity - The given activity ID
+    
++ Response 204
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
+### Delete Post [DELETE /activity/{activity}]
+
+Delete the given activity
+
++ Parameters
+    + activity - The given activity ID 
+    
++ Response 204
+
+## MessageQueue [/messages]
+
+### Get Messages [GET /messages/{user}]
+
+Get the messages for the given user
+
++ Parameters 
+    + user - The ID or key of the given user
+    
++ Response 200 (application/json)
+
+### Create Message [POST /messages/{type}]
+
+Add a given type of message to the queue
+
++ Parameters
+    + type - The type of activity (ProfileActivity or ProjectActivity)
+
++ Response 204
+
+### Delete Message [DELETE /messages/{id}]
+
+Delete a message from the queue when received (*** Push message into the queue if marked unread)
+
++ Parameters
+    + id - ID of the message to delete
+    
++ Response 204
+
 # Data Structures
 
 ## User
