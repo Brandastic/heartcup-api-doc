@@ -102,7 +102,11 @@ Create a JWT token for the given user
 Invalidate the given user's JWT token
 
 + Response 204  (application/json)
- 
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Unauthorized request (string) - The error message
+
 + Response 500 (application/json)
     - Attributes
         - message: Authentication Failed (string) - The error message
