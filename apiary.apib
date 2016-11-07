@@ -726,7 +726,7 @@ Delete a message from the queue when received
 
 ## Contact [/contact]
 
-### Contact Form [POST /contact/{?formData}]
+### Contact Form [POST /contact]
 
 Send a message through the contact form
 
@@ -822,7 +822,7 @@ Send a message through the contact form
 
 + description: Basic Project Description (string) - Description of the project
 + details (object) - Details of the project
-+ supporters (array[number]) - Array representing users who support this project
++ supporters (array[StoredUser]) - Array representing users who support this project
 + currency (enum[string]) - The type of currency expected for the project (USD default)
     + Default: USD
     + Members
