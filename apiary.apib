@@ -33,6 +33,49 @@ Fetch all users or projects that the given user follows
 + Response 404 (application/json)
     - Attributes
         - message: User not found (string) - The error message
+        
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to create project (string) - The error message
+
+
+### Follow [POST /user/following/{?type,id_to_follow}]
+
+Add user or project to the given user's following list
+
++ Parameters
+    + type (required) - The type of object being followed
+    + id_to_follow (required) - The ID of the object being followed
+
++ Response 204 (application/json)
+    - Attributes (User)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to create project (string) - The error message
+        
+### Unfollow [DELETE /user/{user}/following/{?type,id_to_follow}]
+
+Remove user or project from the given user's following list
+
++ Parameters
+    + user (required) - The user ID or email address
+    + type (required) - The type of object to remove
+    + id_to_follow(required) - The ID of the object being removed
+    
++ Response 204 (application/json)
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Login [POST /user/token]
 
@@ -46,7 +89,7 @@ Create a JWT token for the given user
     - Attributes
         - token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ` (string) - The JWT Token
         
-+ Response 401 (application/json)
++ Response 403 (application/json)
     - Attributes
         - message: Invalid email address or password (string) - The error message
 
@@ -58,11 +101,11 @@ Create a JWT token for the given user
 
 Invalidate the given user's JWT token
 
-+ Response 204
++ Response 204  (application/json)
  
-+ Response 401 (application/json)
++ Response 500 (application/json)
     - Attributes
-        - message: Authentication failed (string) - The error message
+        - message: Authentication Failed (string) - The error message
 
 ### Register [POST /user]
 
@@ -83,18 +126,6 @@ Register a new user
     - Attributes
         - message: Failed to create user (string) - The error message
 
-### Follow [POST /user/following/{?type,id_to_follow}]
-
-Add user or project to the given user's following list
-
-+ Parameters
-    + type (required) - The type of object being followed
-    + id_to_follow (required) - The ID of the object being followed
-
-+ Response 200 (application/json)
-    - Attributes (User)
-
-
 ### Update [PUT /user/{user}]
 
 Update the given user
@@ -104,11 +135,15 @@ Update the given user
     
 + Attributes (User)
     
-+ Response 204
++ Response 204 (application/json)
 
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to create project (string) - The error message
 
 ### Update Profile Image [PUT /user/{user}/profileImage]
 
@@ -117,25 +152,15 @@ Update the given user's profile image
 + Parameters
     + user (required) - The user ID or email address
     
-+ Response 204
++ Response 204 (application/json)
     
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
 
-
-### Unfollow [DELETE /user/{user}/following/{?type,id_to_follow}]
-
-Remove user or project from the given user's following list
-
-+ Parameters
-    + user (required) - The user ID or email address
-    + type (required) - The type of object to remove
-    + id_to_follow(required) - The ID of the object being removed
-    
-+ Response 204
-
-+ Response 404 (application/json) 
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ## Projects [/project]
 
@@ -172,6 +197,10 @@ Fetch the details of a project. Takes the project ID or key as a parameter
 + Response 200 (application/json)
     - Attributes (ProjectDetail)
 
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
 ### Supporters [GET /project/{projectId}/supporters]
 
 Fetch an array of supporters for a project. Takes the project ID or key as a parameter.
@@ -181,6 +210,10 @@ Fetch an array of supporters for a project. Takes the project ID or key as a par
     
 + Response 200 (application/json)
     - Attributes (array[ProjectDetail])
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Create Project [POST /project]
 
@@ -194,9 +227,13 @@ Create a new project.
         + goalAmount (optional, number)
         + goalDate (string) - The target date for this project to be completely funded (ISO8601 format)
 
-+ Response 201
++ Response 201 (application/json)
     - Attributes (Project)
-    
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
 + Response 500 (application/json)
     - Attributes
         - message: Failed to create project (string) - The error message
@@ -216,7 +253,15 @@ Update a project.
         + goalAmount (optional, number)
         + goalDate (string) - The target date for this project to be completely funded (ISO8601 format)
         
-+ Response 204
++ Response 204 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Delete a Project [DELETE /project/{projectId}]
 
@@ -225,9 +270,15 @@ Delete a project
 + Parameters
     + projectId (required, number) - The ID of the project to delete
     
-+ Response 204 
++ Response 204  (application/json)
 
-+ Response 401
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ## Search [/search]
 
@@ -253,6 +304,10 @@ Produce a search for Users or Projects
             - id: 3 (number)
             - title: Local Animal Shelter
 
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
 ## Categories [/category]
 
 ### Get all Categories [GET /category]
@@ -262,6 +317,9 @@ Fetch all categories
 + Response 200 (application/json)
     + Attributes (array[Category])
 
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 ### Browse Category [GET /category/{?category_key,orderBy,order,limit,page}]
 
 List everything in a given category
@@ -275,7 +333,11 @@ List everything in a given category
     
 + Response 200 (application/json)
     - Attributes (array[StoredCategory])
-
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
 ### Update Category [PUT /category/{category}]
 
 Update a given category
@@ -283,9 +345,16 @@ Update a given category
 + Parameters
     + category (required) - The ID or key for the category to update
 
-+ Attributes (Category)
++ Response 204 (application/json)
+    + Attributes (Category)
     
-+ Response 204
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
     
 ### Create Category [POST /category]
 
@@ -293,10 +362,18 @@ Create a new category
 
 + Response 201 (application/json)
 
-+ Response 409 (application/json)
++ Response 422 (application/json)
     + Attributes
         - message: Category already exists (string) - The error message
-       
+        
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
 ### Delete Category [DELETE /category/{category}]
         
 Delete the given category
@@ -304,7 +381,15 @@ Delete the given category
 + Parameters 
     + category (required) - The ID or key for the category to remove
     
-+ Response 204
++ Response 204 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ## Transactions [/paygate]
 
@@ -317,6 +402,14 @@ Fetch details for a transaction
     
 + Response 200 (application/json)
     + Attributes (Transaction)
+    
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### View Donation [GET /paygate/donate/{donation}]
 
@@ -328,6 +421,14 @@ Fetch the donation record
 + Response 200 (application/json)
     + Attributes (Donation)
     
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+    
 ### Update Transaction [PUT /paygate/{transaction}]
 
 Update the given transaction
@@ -335,9 +436,16 @@ Update the given transaction
 + Parameters
     + transaction (required) - The ID of the transaction to update
 
-+ Attributes (Transaction)
++ Response 200 (application/json)
+    + Attributes (Transaction)
 
-+ Response 204
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Update Donation [PUT /paygate/donate/{donation}]
 
@@ -346,9 +454,10 @@ Update the given donation
 + Parameters 
     + donation (required) - The ID of the donation to update
 
-+ Attributes (Donation)
++ Response 200 (application/json)
+    + Attributes (Donation)
 
-+ Response 204
++ Response 204 (application/json)
 
 ### Buy Hearts [POST /paygate]
 
@@ -357,7 +466,15 @@ Purchase Hearts
 + Response 200 (application/json)
     + Attributes (Transaction)
 
-+ Response 400
++ Response 400 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Donate [POST /paygate/donate/{donation}]
 
@@ -369,7 +486,15 @@ Donate to a project
 + Response 200 (application/json)
     + Attributes (Donation)
 
-+ Response 400
++ Response 400 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ## Organization [/organization]
 
@@ -379,6 +504,14 @@ Fetch all organizations
 
 + Response 200 (application/json)
     + Attributes (array[Organization])
+    
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Get Organization [GET /organization/{organization}]
 
@@ -390,6 +523,14 @@ Fetch the given organization
 + Response 200 (application/json)
     + Attributes (Organization)
 
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
 ### Update Organization [PUT /organization/{organization}]
 
 Update the given organization
@@ -397,7 +538,15 @@ Update the given organization
 + Parameters
     + organization (required) - The ID or key of the organization to update
     
-+ Response 204
++ Response 204 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Create Organization [POST /organization]
 
@@ -405,17 +554,33 @@ Create a new organization
 
 + Response 201 (application/json)
     + Attributes (Organization)
+    
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
 
-+ Response 409 (application/json)
++ Response 422 (application/json)
     + Attributes
         + message: Organization already exists (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
     
 ### Delete Organization [DELETE /organization/{organization}]
 
 Soft delete given organization
 
-+ Response 204
++ Response 200 (application/json)
 
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
 ## Activity [/activity]
 
 ### Get Post [GET /activity/{id}]
@@ -427,6 +592,14 @@ Get a post for a given entity (User, Project, Organization)
     
 + Response 200 (application/json)
     + Attributes (Activity)
+    
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ### Get Post By Entity [GET /activity/{?type,entity_id}]
 
@@ -439,13 +612,29 @@ Get post by given entity
 + Response 200 (application/json)
     + Attributes (Activity)
 
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
 ### Create Post [POST /activity]
 
 Create a new post
 
-+ Response 201
++ Response 201 (application/json)
     + Attributes (Activity)
     
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500
+    - Attributes
+        - message: An error has occurred
+
 ### Update Post [PUT /activity/{activity}]
 
 Update the given activity
@@ -453,11 +642,15 @@ Update the given activity
 + Parameters
     + activity - The given activity ID
     
-+ Response 204
++ Response 200 (application/json)
 
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
+        
++ Response 500
+    - Attributes
+        - message: An error has occurred
         
 ### Delete Post [DELETE /activity/{activity}]
 
@@ -466,7 +659,15 @@ Delete the given activity
 + Parameters
     + activity - The given activity ID 
     
-+ Response 204
++ Response 200
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500
+    - Attributes
+        - message: An error has occurred
 
 ## MessageQueue [/messages]
 
@@ -479,6 +680,14 @@ Get the messages for the given user
     
 + Response 200 (application/json)
 
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
 ### Create Message [POST /messages/{type}]
 
 Add a given type of message to the queue
@@ -486,16 +695,34 @@ Add a given type of message to the queue
 + Parameters
     + type - The type of activity (ProfileActivity or ProjectActivity)
 
-+ Response 204
++ Response 201 (application/json)
+    - Attributes
+        - message: Message has been created.
 
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
 ### Delete Message [DELETE /messages/{id}]
 
-Delete a message from the queue when received (*** Push message into the queue if marked unread)
+Delete a message from the queue when received
 
 + Parameters
     + id - ID of the message to delete
     
-+ Response 204
++ Response 200 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
 
 ## Contact [/contact]
 
@@ -506,13 +733,17 @@ Send a message through the contact form
 + Parameters
     + formData (required) - The contact form information containing the sender's name, email, and message content.
     
-+ Response 202 (application/json)
++ Response 200 (application/json)
     + Attributes 
         + message: Your message has been received and will be reviewed shortly (string) - The verification message
         
 + Response 400 (application/json)
     + Attributes 
         + message: Fields cannot be left blank (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
         
 # Data Structures
 
@@ -714,7 +945,7 @@ Send a message through the contact form
 + name: Sample Organization (string) - The name of the organization
 + key: 1 (number) - The ID of the URL key corresponding to the organization
 + type: 1 (number) - Charity / Business / Group / Etc
-+ members (array[number]) - An array of organization members
++ members (array[OrganizationMember]) - An array of organization members
 
 ### School (Organization)
 
