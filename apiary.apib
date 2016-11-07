@@ -21,7 +21,7 @@ Fetch the user details
 
 ### Following [GET /user/{user}/following/{?type}]
 
-Fetch all users or projects that the current user follows
+Fetch all users or projects that the given user follows
 
 + Parameters
     + user (required) - The user ID or email address
@@ -56,7 +56,7 @@ Create a JWT token for the given user
         
 ### Logout [POST /user/logout]
 
-Invalidate current user's JWT token
+Invalidate the given user's JWT token
 
 + Response 204
  
@@ -85,7 +85,7 @@ Register a new user
 
 ### Follow [POST /user/following/{?type,id_to_follow}]
 
-Add user or project to current user's following list
+Add user or project to the given user's following list
 
 + Parameters
     + type (required) - The type of object being followed
@@ -126,7 +126,7 @@ Update the given user's profile image
 
 ### Unfollow [DELETE /user/{user}/following/{?type,id_to_follow}]
 
-Remove user or project from the current user's following list
+Remove user or project from the given user's following list
 
 + Parameters
     + user (required) - The user ID or email address
@@ -497,6 +497,23 @@ Delete a message from the queue when received (*** Push message into the queue i
     
 + Response 204
 
+## Contact [/contact]
+
+### Contact Form [POST /contact/{?formData}]
+
+Send a message through the contact form
+
++ Parameters
+    + formData (required) - The contact form information containing the sender's name, email, and message content.
+    
++ Response 202
+    + Attributes (application/json)
+        + message: Your message has been received and will be reviewed shortly (string) - The verification message
+        
++ Response 400
+    + Attributes (application/json)
+        + message: Fields cannot be left blank (string) - The error message
+        
 # Data Structures
 
 ## User
@@ -522,14 +539,14 @@ Delete a message from the queue when received (*** Push message into the queue i
             + hidden - Do not show projects supported or donation amounts
             + projects (default) - Only show projects the user supports
             + public - Show projects and donation amounts
-+ followingUsers (array[StoredUser]) - The users that the current user follows
-+ followingProjects (array[StoredProject]) - The projects that the current user follows
-+ followingOrganizations (array[Organization]) - The organizations that the current user follows
++ followingUsers (array[StoredUser]) - The users that the given user follows
++ followingProjects (array[StoredProject]) - The projects that the given user follows
++ followingOrganizations (array[Organization]) - The organizations that the given user follows
 + paymentMethod (object) - Object representing the user's payment card
 + ownedProjects (array[StoredProject]) - Array representing projects created and owned by the user
 + school (School) - The user's associated school
 + coreValues: `Core Value 1, Core Value 2, Core Value 3` (string) - The user's core value preferences
-+ organizations (array[Organization]) - The organizations that the current user is a member of
++ organizations (array[Organization]) - The organizations that the given user is a member of
 + newsletterOptIn (enum[number]) - User's opt-in option for the newsletter
     + Default: 1
     + Members
@@ -541,7 +558,7 @@ Delete a message from the queue when received (*** Push message into the queue i
 + id: 1 (number) - The user ID
 + posts (array[ProfileActivity]) - Array of user's profile activity
 + accountBalance: 100.00 (number) - The user's account balance (in hearts?)
-+ backers (array[number]) - Array of user IDs of people who support the current user's owned projects
++ backers (array[number]) - Array of user IDs of people who support the given user's owned projects
 + totalDonated: 100.00 (number) - Aggregated amount representing how much the user has donated to various projects
 + totalReceived: 100.00 (number) - Aggregated amount representing how much the user has received in support for owned projects
 + isActive (enum[number]) - Value representing whether or not the user account is still active
@@ -596,7 +613,7 @@ Delete a message from the queue when received (*** Push message into the queue i
         + 0 - Inactive / Disabled
         + 1 (default) - Active
 + categories (array[number]) - The categories associated with this project
-+ updates (array[ProjectActivity]) - The status updates associated with the current project
++ updates (array[ProjectActivity]) - The status updates associated with the given project
 
 ## Address
 
