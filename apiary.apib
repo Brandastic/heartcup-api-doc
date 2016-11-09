@@ -585,9 +585,9 @@ Soft delete given organization
     - Attributes
         - message: An error has occurred
 
-## Activity [/activity]
+## Update [/update]
 
-### Get Post [GET /activity/{id}]
+### Get Post [GET /update/{id}]
 
 Get a post for a given entity (User, Project, Organization)
 
@@ -595,7 +595,7 @@ Get a post for a given entity (User, Project, Organization)
     + id - The ID or key for the given entity 
 
 + Response 200 (application/json)
-    + Attributes (Activity)
+    + Attributes (Update)
 
 + Response 403 (application/json)
     - Attributes
@@ -605,16 +605,16 @@ Get a post for a given entity (User, Project, Organization)
     - Attributes
         - message: An error has occurred
 
-### Get Posts By Entity [GET /activity/{?type,entity_id}]
+### Get Posts By Entity [GET /update/{?type,entity_id}]
 
 Get posts by given entity
 
 + Parameters
-    + type - The activity type
+    + type - The update type
     + entity_id - The ID of the entity
 
 + Response 200 (application/json)
-    + Attributes (Activity)
+    + Attributes (Update)
 
 + Response 403 (application/json)
     - Attributes
@@ -624,12 +624,12 @@ Get posts by given entity
     - Attributes
         - message: An error has occurred
 
-### Create Post [POST /activity]
+### Create Post [POST /update]
 
 Create a new post
 
 + Response 201 (application/json)
-    + Attributes (Activity)
+    + Attributes (Update)
 
 + Response 403 (application/json)
     - Attributes
@@ -639,12 +639,12 @@ Create a new post
     - Attributes
         - message: An error has occurred
 
-### Update Post [PUT /activity/{activity}]
+### Update Post [PUT /update/{update}]
 
 Update the given activity
 
 + Parameters
-    + activity - The given activity ID
+    + update - The given activity ID
 
 + Response 200 (application/json)
 
@@ -656,12 +656,12 @@ Update the given activity
     - Attributes
         - message: An error has occurred
 
-### Delete Post [DELETE /activity/{activity}]
+### Delete Post [DELETE /update/{update}]
 
 Delete the given activity
 
 + Parameters
-    + activity - The given activity ID 
+    + update - The given update ID 
 
 + Response 200
 
@@ -697,7 +697,7 @@ Get the messages for the given user
 Add a given type of message to the queue
 
 + Parameters
-    + type - The type of activity (ProfileActivity or ProjectActivity)
+    + type - The type of activity (ProfileUpdate or ProjectUpdate)
 
 + Response 201 (application/json)
     - Attributes
@@ -788,7 +788,7 @@ Send a message through the contact form
 ### StoredUser (User)
 
 + id: 1 (number) - The user ID
-+ posts (array[ProfileActivity]) - Array of user's profile activity
++ posts (array[ProfileUpdate]) - Array of user's profile activity
 + accountBalance: 100.00 (number) - The user's account balance (in hearts?)
 + backers (array[StoredUser]) - Array of user IDs of people who support the given user's owned projects
 + totalDonated: 100.00 (number) - Aggregated amount representing how much the user has donated to various projects
@@ -845,7 +845,7 @@ Send a message through the contact form
         + 0 - Inactive / Disabled
         + 1 (default) - Active
 + categories (array[number]) - The categories associated with this project
-+ updates (array[ProjectActivity]) - The status updates associated with the given project
++ updates (array[ProjectUpdate]) - The status updates associated with the given project
 
 ## Address
 
@@ -874,29 +874,29 @@ Send a message through the contact form
         + 1 - Organization
 + entityId: 1 (number) - The ID of the object to which this key belong (StoredProject.id, etc)
 
-## Activity
+## Update
 
-+ id: 1 (number) - The activity ID
++ id: 1 (number) - The update ID
 + entityId: 1 (optional, number) - Optional ID of related entity
-+ type (enum[number]) - The type of activity - project update, profile post
++ type (enum[number]) - The type of status update - project update, profile post
     + Default: 0
     + Members
-        + 0 - ProfileActivity - Profile Post
-        + 1 - ProjectActivity - Project Update
-+ description: Dummy Post Content (string) - The activity description
-+ createdDate: `2016-05-05T12:30:00` (string) - The activity date (ISO8601 format)
+        + 0 - ProfileUpdate - Profile Post
+        + 1 - ProjectUpdate - Project Update
++ description: Dummy Post Content (string) - The update description
++ createdDate: `2016-05-05T12:30:00` (string) - The update date (ISO8601 format)
 + status: 1 (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
 
 
-### ProjectActivity (Activity)
+### ProjectUpdate (Update)
 
-+ projectId: 1 (number) - The project ID associated with the activity
-+ userId: 1 (number) - The ID of the user who created the activity
++ projectId: 1 (number) - The project ID associated with the status update
++ userId: 1 (number) - The ID of the user who created the status update
 
-### ProfileActivity(Activity) 
+### ProfileUpdate (Update) 
 
-+ userId: 1 (number) - The user ID associated with the activity
-+ organizationId: 1 (number) - The organization ID associated with the activity
++ userId: 1 (number) - The user ID associated with the status update
++ organizationId: 1 (number) - The organization ID associated with the status update
 
 ## Transaction
 
