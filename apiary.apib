@@ -810,7 +810,7 @@ Send a message through the contact form
 + summary: Sample Project Summary (string) - The project summary
 + goalAmount: 10000 (number) - The project goal amount in hearts
 + goalDate: `2016-05-05T12:30:00` (string) - The target date for this project to be completely funded (ISO8601 format)
-+ ownerId: 1 (number) - The user or organization ID of the project creator and owner
++ owner (object) - The user or organization that owns the project
 
 ### StoredProject (Project)
 
@@ -947,6 +947,7 @@ Send a message through the contact form
 + key: 1 (number) - The ID of the URL key corresponding to the organization
 + type: 1 (number) - Charity / Business / Group / Etc
 + members (array[OrganizationMember]) - An array of organization members
++ owner (object) - The organization owner
 
 ### School (Organization)
 
