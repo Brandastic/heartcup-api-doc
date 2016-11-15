@@ -21,11 +21,11 @@ Fetch the user details
 
 ### Following [GET /user/{user}/following/{?type}]
 
-Fetch all users or projects that the given user follows
+Fetch all users, projects, or organizations that the given user follows
 
 + Parameters
     + user (required) - The user ID or email address
-    + type (required) - The type of object the user is following (User/Project)
+    + type (required, number) - The type of object the user is following (1 - User, 2 - Project, 3 - Organization)
 
 + Response 200 (application/json)
     - Attributes (array[StoredUser, StoredProject])
@@ -43,12 +43,13 @@ Fetch all users or projects that the given user follows
         - message: Failed to create project (string) - The error message
 
 
-### Follow [POST /user/following/{?type,id_to_follow}]
+### Follow [POST /user/{user}/following/{?type,id_to_follow}]
 
-Add user or project to the given user's following list
+Add specified type to the given user's following list
 
 + Parameters
-    + type (required) - The type of object being followed
+    + user (required) - The user ID or email address
+    + type (required, number) - The type of object being followed (1 - User, 2 - Project, 3 - Organization)
     + id_to_follow (required) - The ID of the object being followed
 
 + Response 204 (application/json)
@@ -64,11 +65,11 @@ Add user or project to the given user's following list
 
 ### Unfollow [DELETE /user/{user}/following/{?type,id_to_follow}]
 
-Remove user or project from the given user's following list
+Remove the specified type from the given user's following list
 
 + Parameters
     + user (required) - The user ID or email address
-    + type (required) - The type of object to remove
+    + type (required, number) - The type of object to remove (1 - User, 2 - Project, 3 - Organization)
     + id_to_follow(required) - The ID of the object being removed
 
 + Response 204 (application/json)
@@ -759,13 +760,13 @@ Send a message through the contact form
         + regular (default) - Regular user
         + pro - Pro user (paid account)
 + privacy (object) - The user's privacy settings
-    + profile (enum[string]) - The user's profile visiblity
+    + profile (enum[string]) - The user's profile visibility
         + Default : public
         + Members
             + hidden - The user's profile is hidden
             + public (default) - The user's profile is visible to anyone, links to the user's profile may appear on HeartCup
             + link - The user's profile is only visible with a direct link
-    + donations (enum[string]) - The user's donation visiblity
+    + donations (enum[string]) - The user's donation visibility
         + Default: projects
         + Members
             + hidden - Do not show projects supported or donation amounts
