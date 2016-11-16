@@ -21,15 +21,16 @@ Fetch the user details
 
 ### Following [GET /user/{user}/following/{?type}]
 
-Fetch all users, projects, or organizations that the given user follows
+Fetch all users, projects, or organizations that the given user follows. Returns
+an array of stored of the specified type.
 
 + Parameters
     + user (required) - The user ID or email address
     + type (required, number) - The type of object the user is following (1 - User, 2 - Project, 3 - Organization)
 
 + Response 200 (application/json)
-    - Attributes (array[StoredUser, StoredProject])
-    
+    - Attributes (array[object])
+
 + Response 404 (application/json)
     - Attributes
         - message: User not found (string) - The error message
