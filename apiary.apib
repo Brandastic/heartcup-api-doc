@@ -19,10 +19,10 @@ Fetch the user details
     - Attributes
         - message: User does not exist (string) - The error message
 
-### Following [GET /user/{user}/following/{?type}]
+### Following [GET /user/{user}/following/{type}]
 
 Fetch all users, projects, or organizations that the given user follows. Returns
-an array of stored of the specified type.
+an array of stored objects of the specified type.
 
 + Parameters
     + user (required) - The user ID or email address
@@ -44,9 +44,9 @@ an array of stored of the specified type.
         - message: Failed to create project (string) - The error message
 
 
-### Follow [POST /user/{user}/following/{?type,id_to_follow}]
+### Follow [POST /user/{user}/following/{type}/{id_to_follow}]
 
-Add specified type to the given user's following list
+Add entity of the specified type to the given user's following list 
 
 + Parameters
     + user (required) - The user ID or email address
@@ -54,26 +54,37 @@ Add specified type to the given user's following list
     + id_to_follow (required) - The ID of the object being followed
 
 + Response 204 (application/json)
-    - Attributes (User)
 
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
+        
++ Response 404 (application/json)
+    - Attributes
+        - message: Entity not found (string) - The error message
+
++ Response 422 (application/json)
+    - Attributes
+        - message: Error following entity (string) - The error message
 
 + Response 500 (application/json)
     - Attributes
         - message: Failed to create project (string) - The error message
 
-### Unfollow [DELETE /user/{user}/following/{?type,id_to_follow}]
+### Unfollow [DELETE /user/{user}/following/{type}/{id_to_unfollow}]
 
-Remove the specified type from the given user's following list
+Remove entity of the specified type from the given user's following list
 
 + Parameters
     + user (required) - The user ID or email address
     + type (required, number) - The type of object to remove (1 - User, 2 - Project, 3 - Organization)
-    + id_to_follow(required) - The ID of the object being removed
+    + id_to_unfollow(required) - The ID of the object being removed
 
 + Response 204 (application/json)
+
++ Response 404 (application/json)
+    - Attributes
+        - message: Entity not found (string) - The error message
 
 + Response 500 (application/json)
     - Attributes
