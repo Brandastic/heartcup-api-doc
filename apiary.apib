@@ -513,7 +513,7 @@ Donate to a project
     - Attributes
         - message: An error has occurred
 
-## Organization [/organization]
+## Organizations [/organization]
 
 ### Get All Organizations [GET /organization]
 
@@ -522,13 +522,9 @@ Fetch all organizations
 + Response 200 (application/json)
     + Attributes (array[Organization])
 
-+ Response 403 (application/json)
-    - Attributes
-        - message: Permission denied (string) - The error message
-
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Get Organization [GET /organization/{organization}]
 
@@ -540,13 +536,13 @@ Fetch the given organization
 + Response 200 (application/json)
     + Attributes (Organization)
 
-+ Response 403 (application/json)
-    - Attributes
-        - message: Permission denied (string) - The error message
-
++ Response 404 (application/json)
+    + Attributes
+        - message: Organization not found (string) - The error message
+        
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Update Organization [PUT /organization/{organization}]
 
@@ -561,9 +557,13 @@ Update the given organization
     - Attributes
         - message: Permission denied (string) - The error message
 
++ Response 404 (application/json)
+    - Attributes
+        - message: Organization not found (string) - The error message
+
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Organization [POST /organization]
 
@@ -572,7 +572,7 @@ Create a new organization
 + Response 201 (application/json)
     + Attributes (Organization)
 
-+ Response 403 (application/json)
++ Response 401 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
 
@@ -582,21 +582,27 @@ Create a new organization
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Delete Organization [DELETE /organization/{organization}]
 
-Soft delete given organization
+Soft delete specified organization
 
 + Response 200 (application/json)
+    -  Attributes
+        - message: Organization was successfully deleted (string) - The response message
 
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
+        
++ Response 404 (application/json)
+    - Attributes
+        - message: Organization not found (string) - The error message
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Update [/update]
 
