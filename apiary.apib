@@ -624,17 +624,21 @@ Get a post for a given entity (User, Project, Organization)
     - Attributes
         - message: An error has occurred
 
-### Get Posts By Entity [GET /update/{?type,entity_id}]
+### Get Posts By Entity [GET /update/{type}/{entity_id}]
 
-Get posts by given entity
+Get posts for the given entity
 
 + Parameters
-    + type - The update type
+    + type - The update type (1 - User, 2 - Project, 3 - Organization)
     + entity_id - The ID of the entity
 
 + Response 200 (application/json)
-    + Attributes (Update)
+    + Attributes (array[Update]) 
 
++ Response 400 (application/json)
+    - Attributes
+        - message: Invalid request (string) - The error message
+        
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
