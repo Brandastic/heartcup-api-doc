@@ -194,16 +194,25 @@ Search for projects. Returns a list of project summaries.
     + page (optional) - The page to return, if limit is also given
 
 + Response 200 (application/json)
-    - Attributes (array)
-        - (Project)
-            - id: 1 (number)
-            - title: After School Programs
-        - (Project)
-            - id: 2 (number)
-            - title: Music in the Park
-        - (Project)
-            - id: 3 (number)
-            - title: Local Animal Shelter
+    - Attributes (object)
+        - total (number)
+        - per_page (number) 
+        - current_page (number)
+        - last_page (number)
+        - next_page_url (string)
+        - prev_page_url (string)
+        - from (number) 
+        - to (number) 
+        - data (array)
+            - (Project)
+                - id: 1 (number)
+                - title: After School Programs
+            - (Project)
+                - id: 2 (number)
+                - title: Music in the Park
+            - (Project)
+                - id: 3 (number)
+                - title: Local Animal Shelter
 
 ### Project Detail [GET /project/{projectId}]
 
