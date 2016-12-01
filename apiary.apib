@@ -867,7 +867,7 @@ Send a message through the contact form
     + Members
         + 0 - Inactive / Disabled
         + 1 (default) - Active
-+ categories (array[number]) - The categories associated with this project
++ categories (array[StoredCategory]) - The categories associated with this project
 + updates (array[ProjectUpdate]) - The status updates associated with the given project
 
 ## Address
@@ -939,9 +939,17 @@ Send a message through the contact form
 
 ## Permission
 
-+ userId: 1 (number) - The ID of the user that owns the permissions
 + roleId: 1 (number) - The ID of the type of role 
-+ projectId: 1 (number) - The project ID of the project that owns the permissions
++ resourceAction (enum[string]) - The action which needs permission
+    + Members
+        + update
+        + delete
++ permission (enum[string]) - The grant or deny permission for the action
+    + Members
+        + 1
+        + 0
++ created_at (string) - The transaction date (ISO8601 format)
++ updated_at (string) - The transaction date (ISO8601 format)
 
 ## Role
 
@@ -983,4 +991,3 @@ Send a message through the contact form
 + id: 1 (number) - The ID of the organization member
 + organizationId: 1 (number) - The ID of the organization that the member is a part of
 + userId: 1 (number) - The ID of the stored user 
-+ roleId: 1 (number) - The ID indicating the user's role type in the organization
