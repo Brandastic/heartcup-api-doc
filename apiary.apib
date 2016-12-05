@@ -244,6 +244,8 @@ Create a new project.
         + summary (optional, string)
         + goalAmount (optional, number)
         + goalDate (string) - The target date for this project to be completely funded (ISO8601 format)
+        + ownerType (optional,number) - The type of entity that owns the project (user/organzation).  If not specified API uses authenticated user.
+        + ownerEntityId (optional,number) - The entity id of the object that owns the project. If not specified API uses authenticated user.
 
 + Response 201 (application/json)
     - Attributes (Project)
@@ -975,7 +977,7 @@ Send a message through the contact form
 ## Organization
 
 + id: 1 (number) - The organization ID
-+ name: Sample Organization (string) - The name of the organization
++ title: Sample Organization (string) - The title of the organization
 + key: 1 (number) - The ID of the URL key corresponding to the organization
 + type: 1 (number) - Charity / Business / Group / Etc
 + members (array[OrganizationMember]) - An array of organization members
