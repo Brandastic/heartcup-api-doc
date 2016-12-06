@@ -841,8 +841,10 @@ Send a message through the contact form
 + thumbnail (Image) - The project thumbnail
 + banner (Image) - The project banner
 + address (Address) - The project address
++ email (string) - Contact email for the project.
++ website (string) - External website associated with the project.
 + organizationId: 1 (number) - The id of the organization that owns this project
-+ summary: Sample Project Summary (string) - The project summary
++ missionStatement: Sample Project Mission Statement (string) - The project mission statement
 + goalAmount: 10000 (number) - The project goal amount in hearts
 + goalDate: `2016-05-05T12:30:00` (string) - The target date for this project to be completely funded (ISO8601 format)
 + owner (object) - The user or organization that owns the project
@@ -857,7 +859,6 @@ Send a message through the contact form
 #### ProjectDetail (StoredProject)
 
 + description: Basic Project Description (string) - Description of the project
-+ details (object) - Details of the project
 + supporters (array[StoredUser]) - Array representing users who support this project
 + currency (enum[string]) - The type of currency expected for the project (USD default)
     + Default: USD
