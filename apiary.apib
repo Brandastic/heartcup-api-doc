@@ -58,7 +58,7 @@ Add entity of the specified type to the given user's following list
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
-        
+
 + Response 404 (application/json)
     - Attributes
         - message: Entity not found (string) - The error message
@@ -132,7 +132,7 @@ Register a new user
     + password (required) - The user's password
 
 + Request (application/x-www-form-urlencoded)
-    
+
 + Response 201 (application/json)
     - Attributes (User)
 
@@ -234,7 +234,7 @@ Fetch an array of supporters for a project. Takes the project ID or key as a par
 
 + Parameters
     + projectId (required, string) - The Project ID or Key
-    
+
 + Response 200 (application/json)
     - Attributes (array[StoredUser])
 
@@ -287,7 +287,7 @@ Update a project.
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
-        
+
 + Response 500 (application/json)
     - Attributes
         - message: An error has occurred
@@ -455,7 +455,7 @@ Fetch details for a transaction
     - Attributes
         - message: An error has occurred
 
-### Update Transaction [PUT /transaction]
+### Update Transaction [PUT /transaction/{transaction}]
 
 Update the given transaction 
 
@@ -471,21 +471,23 @@ Update the given transaction
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Add Card To Account [POST /transaction/addCard]
 
 Add or update the credit card on file for the current user.
 
-+ Parameters
-    + cardNumber - The credit card number to add or update
-    + expMonth  - The credit card expiration month
-    + expYear   - The credit card expiration year
-    + cvc   - The credit card validation number
-    
++ Request (application/x-www-form-urlencoded)
+    - Attributes
+        + cardNumber - The credit card number to add or update
+        + expMonth  - The credit card expiration month
+        + expYear   - The credit card expiration year
+        + cvc   - The credit card validation number
+
 + Response 200 (application/json)
-    + message: "Credit card account created successfully"
-    
+    - Attributes
+        - message:Credit card account created successfully
+
 + Response 500 (application/json)
     - Attributes
         - message: An error has occurred
@@ -494,32 +496,58 @@ Add or update the credit card on file for the current user.
 
 Add money to the current user's account balance
 
-+ Parameters
-    + amount - The dollar value (whole dollars, USD) to be charged to the user's account
++ Request (application/x-www-form-urlencoded)
+    - Attributes
+        - amount (number) - The dollar value in dollars / USD to be charged to the user's account
 
 + Response 200 (application/json)
-    + message: "Transaction completed successfully"
-    
+    - Attributes
+        - message: Transaction completed successfully (string) - The response
+
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Refund [POST /transaction/refund]
 
 Refund a user based off of an existing transaction
 
-+ Parameters
-    + transactonId - The ID of the transaction to be reversed
-    + userId - The user ID that owns the transaction.
++ Request (application/x-www-form-urlencoded)
+    - Attributes
+        - transactonId - The ID of the transaction to be reversed
+        - userId - The user ID that owns the transaction.
 
 + Response 200 (application/json)
-    + message: "Refund completed successfully"
-    
+    - Attributes
+        - message: "Refund completed successfully" (string) - The error message
+
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Donations [/donation]
+
+### Donate [POST /donation/{donation}]
+
+Donate to a project
+
++ Request (application/x-www-form-urlencoded)
+    - Attributes
+        - project_id (required,number) - Project ID to submit donation to
+        - amount (required,number) - Amount to donate
+        - details (string) - Transaction details
+
++ Response 200 (application/json)
+    - Attributes
+        - message: Donation completed successfully. (string) - The response
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred (string) - The error message
 
 ### View All Donations [GET /donation]
 
@@ -534,17 +562,17 @@ A paginated collection of all donations.
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
-        
+        - message: An error has occurred (string) - The error message
+
 ### View Donation [GET /donation/{donation_id}]
 
-Fetch the donation record
+View an individual donation record
 
 + Parameters
-    + donation_id (required) - The ID of the donation
+    + donation_id (required,number) - The ID of the donation
 
 + Response 200 (application/json)
-    + Attributes (Donation)
+    - Attributes (Donation)
 
 + Response 403 (application/json)
     - Attributes
@@ -552,52 +580,31 @@ Fetch the donation record
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Update Donation [PUT /donation/{donation_id}]
 
 Update the given donation
 
-+ Parameters 
-    + donation (required) - The donation object to update
++ Request (application/x-www-form-urlencoded)
+    - Attributes
+        - donation (required) - The donation object to update
 
 + Response 200 (application/json)
     + Attributes (Donation)
 
 + Response 204 (application/json)
 
-### Donate [POST /donation/{donation}]
-
-Donate to a project
-
-+ Parameters
-    + project_id (required) - Project ID to submit donation to
-    + amount (required) - Amount to donate
-    + details - Details about the donation.
-
-+ Response 200 (application/json)
-    + message: Donation completed successfully.
-
-+ Response 400 (application/json)
-
-+ Response 403 (application/json)
-    - Attributes
-        - message: Permission denied (string) - The error message
-
-+ Response 500 (application/json)
-    - Attributes
-        - message: An error has occurred
-
-### Reverse A Donation [DEL /donation/{donation_id}]
+### Reverse A Donation [DELETE /donation/{donation_id}]
 
 Reverse a donation.
 
 + Parameters
     + donation_id (required) - Project ID to submit donation to
-    
+
 + Response 200 (application/json)
     + message: Donation reversed successfully.
-    
+
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
@@ -632,7 +639,7 @@ Fetch the given organization
 + Response 404 (application/json)
     + Attributes
         - message: Organization not found (string) - The error message
-        
+
 + Response 500 (application/json)
     - Attributes
         - message: An error has occurred (string) - The error message
@@ -731,7 +738,7 @@ Get posts for the given entity
 + Response 400 (application/json)
     - Attributes
         - message: Invalid request (string) - The error message
-        
+
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
