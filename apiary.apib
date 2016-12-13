@@ -420,9 +420,24 @@ Delete the given category
     - Attributes
         - message: An error has occurred
 
-## Transactions [/paygate]
+## Transactions [/transaction]
 
-### View Transaction [GET /paygate/{transaction}]
+### View All Transactions [GET /transaction ]
+
+Fetch paginated collection of transactions
+
++ Response 200 (application/json)
+    + Attributes (array[Transaction])
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
+### View Transaction [GET /transaction/{transaction_id}]
 
 Fetch details for a transaction
 
@@ -440,27 +455,9 @@ Fetch details for a transaction
     - Attributes
         - message: An error has occurred
 
-### View Donation [GET /paygate/donate/{donation}]
+### Update Transaction [PUT /transaction]
 
-Fetch the donation record
-
-+ Parameters
-    + donation (required) - The ID of the donation
-
-+ Response 200 (application/json)
-    + Attributes (Donation)
-
-+ Response 403 (application/json)
-    - Attributes
-        - message: Permission denied (string) - The error message
-
-+ Response 500 (application/json)
-    - Attributes
-        - message: An error has occurred
-
-### Update Transaction [PUT /paygate/{transaction}]
-
-Update the given transaction
+Update the given transaction 
 
 + Parameters
     + transaction (required) - The ID of the transaction to update
@@ -476,24 +473,110 @@ Update the given transaction
     - Attributes
         - message: An error has occurred
 
-### Update Donation [PUT /paygate/donate/{donation}]
+### Add Card To Account [POST /transaction/addCard]
+
+Add or update the credit card on file for the current user.
+
++ Parameters
+    + cardNumber - The credit card number to add or update
+    + expMonth  - The credit card expiration month
+    + expYear   - The credit card expiration year
+    + cvc   - The credit card validation number
+    
++ Response 200 (application/json)
+    + message: "Credit card account created successfully"
+    
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
+### Create Transaction [POST /transaction]
+
+Add money to the current user's account balance
+
++ Parameters
+    + amount - The dollar value (whole dollars, USD) to be charged to the user's account
+
++ Response 200 (application/json)
+    + message: "Transaction completed successfully"
+    
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
+### Create Refund [POST /transaction/refund]
+
+Refund a user based off of an existing transaction
+
++ Parameters
+    + transactonId - The ID of the transaction to be reversed
+    + userId - The user ID that owns the transaction.
+
++ Response 200 (application/json)
+    + message: "Refund completed successfully"
+    
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
+## Donations [/donation]
+
+### View All Donations [GET /donation]
+
+A paginated collection of all donations.
+
++ Response 200 (application/json)
+    + Attributes (array[Donation])
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+        
+### View Donation [GET /donation/{donation_id}]
+
+Fetch the donation record
+
++ Parameters
+    + donation_id (required) - The ID of the donation
+
++ Response 200 (application/json)
+    + Attributes (Donation)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred
+
+### Update Donation [PUT /donation/{donation_id}]
 
 Update the given donation
 
 + Parameters 
-    + donation (required) - The ID of the donation to update
+    + donation (required) - The donation object to update
 
 + Response 200 (application/json)
     + Attributes (Donation)
 
 + Response 204 (application/json)
 
-### Buy Hearts [POST /paygate]
+### Donate [POST /donation/{donation}]
 
-Purchase Hearts
+Donate to a project
+
++ Parameters
+    + project_id (required) - Project ID to submit donation to
+    + amount (required) - Amount to donate
+    + details - Details about the donation.
 
 + Response 200 (application/json)
-    + Attributes (Transaction)
+    + message: Donation completed successfully.
 
 + Response 400 (application/json)
 
@@ -505,18 +588,16 @@ Purchase Hearts
     - Attributes
         - message: An error has occurred
 
-### Donate [POST /paygate/donate/{donation}]
+### Reverse A Donation [DEL /donation/{donation_id}]
 
-Donate to a project
+Reverse a donation.
 
 + Parameters
-    + donation (required) - Project ID to submit donation to
-
+    + donation_id (required) - Project ID to submit donation to
+    
 + Response 200 (application/json)
-    + Attributes (Donation)
-
-+ Response 400 (application/json)
-
+    + message: Donation reversed successfully.
+    
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
@@ -787,6 +868,7 @@ Send a message through the contact form
 
 + email: `user@example.com` (string) - The user's email address
 + profileImage (Image) - The user's profile image
++ bannerImage (Image) - The user's profile banner image
 + name: Sample User (string) - The user's display name
 + accountType (enum[string]) - The user's account type
     + Default: regular
@@ -809,7 +891,7 @@ Send a message through the contact form
 + followingUsers (array[StoredUser]) - The users that the given user follows
 + followingProjects (array[StoredProject]) - The projects that the given user follows
 + followingOrganizations (array[Organization]) - The organizations that the given user follows
-+ paymentMethod (object) - Object representing the user's payment card
++ paymentServices (object) - A list of established payment methods for the current user
 + ownedProjects (array[StoredProject]) - Array representing projects created and owned by the user
 + school (School) - The user's associated school
 + coreValues: `Core Value 1, Core Value 2, Core Value 3` (string) - The user's core value preferences
@@ -945,10 +1027,11 @@ Send a message through the contact form
 + type (enum[number]) - Donation / Payment
     + Default: 1
     + Members
-        + 0 - Donation
-        + 1 (default) - Payment
+        + 0 (default) - Payment
+        + 1 - Donation
 + timestamps (string) - The transaction date (ISO8601 format)
 + details (object) - Transaction receipt
++ transactionId - The ID of the transaction from the payment gateway
 
 ### Donation(Transaction)
 
