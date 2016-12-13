@@ -88,7 +88,7 @@ Remove entity of the specified type from the given user's following list
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Login [POST /user/token]
 
@@ -178,7 +178,7 @@ Update the given user's profile image
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Projects [/project]
 
@@ -226,7 +226,7 @@ Fetch the details of a project. Takes the project ID or key as a parameter
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Supporters [GET /project/{projectId}/supporters]
 
@@ -240,7 +240,7 @@ Fetch an array of supporters for a project. Takes the project ID or key as a par
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Project [POST /project]
 
@@ -290,7 +290,7 @@ Update a project.
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Delete a Project [DELETE /project/{projectId}]
 
@@ -307,7 +307,7 @@ Delete a project
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Search [/search]
 
@@ -335,7 +335,7 @@ Produce a search for Users or Projects
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Categories [/category]
 
@@ -348,7 +348,8 @@ Fetch all categories
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
+
 ### Browse Category [GET /category/{?category_key,orderBy,order,limit,page}]
 
 List everything in a given category
@@ -365,7 +366,7 @@ List everything in a given category
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Update Category [PUT /category/{category}]
 
@@ -383,7 +384,7 @@ Update a given category
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Category [POST /category]
 
@@ -401,7 +402,7 @@ Create a new category
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Delete Category [DELETE /category/{category}]
 
@@ -418,7 +419,7 @@ Delete the given category
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Transactions [/transaction]
 
@@ -435,7 +436,7 @@ Fetch paginated collection of transactions
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### View Transaction [GET /transaction/{transaction_id}]
 
@@ -453,7 +454,7 @@ Fetch details for a transaction
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Update Transaction [PUT /transaction/{transaction}]
 
@@ -486,11 +487,11 @@ Add or update the credit card on file for the current user.
 
 + Response 200 (application/json)
     - Attributes
-        - message:Credit card account created successfully
+        - message: Credit card account created successfully (string) - The response message
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Transaction [POST /transaction]
 
@@ -603,7 +604,7 @@ Reverse a donation.
     + donation_id (required) - Project ID to submit donation to
 
 + Response 200 (application/json)
-    + message: Donation reversed successfully.
+    + message: Donation reversed successfully. (string) - The error message
 
 + Response 403 (application/json)
     - Attributes
@@ -611,7 +612,7 @@ Reverse a donation.
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Organizations [/organization]
 
@@ -722,7 +723,7 @@ Get a post for a given entity (User, Project, Organization)
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Get Posts By Entity [GET /update/{type}/{entity_id}]
 
@@ -745,7 +746,7 @@ Get posts for the given entity
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Post [POST /update]
 
@@ -760,7 +761,7 @@ Create a new post
 
 + Response 500
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Update Post [PUT /update/{update}]
 
@@ -777,7 +778,7 @@ Update the given activity
 
 + Response 500
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Delete Post [DELETE /update/{update}]
 
@@ -794,7 +795,7 @@ Delete the given activity
 
 + Response 500
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## MessageQueue [/messages]
 
@@ -813,7 +814,7 @@ Get the messages for the given user
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Create Message [POST /messages/{type}]
 
@@ -824,7 +825,7 @@ Add a given type of message to the queue
 
 + Response 201 (application/json)
     - Attributes
-        - message: Message has been created.
+        - message: Message has been created. (string) - The response message
 
 + Response 403 (application/json)
     - Attributes
@@ -832,7 +833,7 @@ Add a given type of message to the queue
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ### Delete Message [DELETE /messages/{id}]
 
@@ -849,7 +850,7 @@ Delete a message from the queue when received
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 ## Contact [/contact]
 
@@ -867,7 +868,7 @@ Send a message through the contact form
 
 + Response 500 (application/json)
     - Attributes
-        - message: An error has occurred
+        - message: An error has occurred (string) - The error message
 
 # Data Structures
 
