@@ -442,7 +442,7 @@ Fetch paginated collection of transactions
 Fetch details for a transaction
 
 + Parameters
-    + transaction (required) - The ID of the transaction
+    + transaction_id (required) - The ID of the transaction
 
 + Response 200 (application/json)
     + Attributes (Transaction)
@@ -1022,15 +1022,16 @@ Send a message through the contact form
 
 ## PaymentObject
 
-+ id: 1 (number) - The project ID associated with the transaction
++ id: 1 (number) - The ID associated with the transaction
 + userId: 1 (number) - The ID of the user who created the transaction
 + created_at (string) - The transaction date (ISO8601 format)
 + updated_at (string) - The transaction date (ISO8601 format)
 + details (object) - Transaction receipt
 + transactionId - The ID of the transaction from the payment gateway
-+ amount (number)
++ amount (number) - The value of the transaction
 
 ### Transaction (PaymentObject)
+
 + type (enum[number]) - Donation / Payment
     + Default: 1
     + Members
