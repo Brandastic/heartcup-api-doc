@@ -1020,20 +1020,25 @@ Send a message through the contact form
 + userId: 1 (number) - The user ID associated with the status update
 + organizationId: 1 (number) - The organization ID associated with the status update
 
-## Transaction
+## PaymentObject
 
 + id: 1 (number) - The project ID associated with the transaction
 + userId: 1 (number) - The ID of the user who created the transaction
++ created_at (string) - The transaction date (ISO8601 format)
++ updated_at (string) - The transaction date (ISO8601 format)
++ details (object) - Transaction receipt
++ transactionId - The ID of the transaction from the payment gateway
++ amount (number)
+
+### Transaction (PaymentObject)
 + type (enum[number]) - Donation / Payment
     + Default: 1
     + Members
         + 0 (default) - Payment
         + 1 - Donation
-+ timestamps (string) - The transaction date (ISO8601 format)
-+ details (object) - Transaction receipt
-+ transactionId - The ID of the transaction from the payment gateway
++ currency: USD (string) - The currency for the transaction
 
-### Donation(Transaction)
+### Donation (PaymentObject)
 
 + projectId: 1 (number) - The project ID associated with the donation
 
