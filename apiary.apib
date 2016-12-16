@@ -876,8 +876,9 @@ Send a message through the contact form
 ## User
 
 + email: `user@example.com` (string) - The user's email address
-+ profileImage (Image) - The user's profile image
-+ bannerImage (Image) - The user's profile banner image
++ profileImage array[(Media)] - The user's profile image in various sizes
++ bannerImage array[(Media)] - The user's profile banner image collection
++ video (Media) - The user's profile video
 + name: Sample User (string) - The user's display name
 + accountType (enum[string]) - The user's account type
     + Default: regular
@@ -929,8 +930,9 @@ Send a message through the contact form
 
 + title: The Outreach Project (string) - The project title
 + tagline: Sponsored by the Giving Keys (string) - The project tagline
-+ thumbnail (Image) - The project thumbnail
-+ banner (Image) - The project banner
++ thumbnailImage (Media) - The project thumbnail
++ bannerImage array[(Media)] - The project profile banner image collection
++ video (Media) - The project video
 + shippingAddress (Address) - The project address
 + billingAddress (Address) - The project address
 + email (string) - Contact email for the project.
@@ -985,7 +987,7 @@ Send a message through the contact form
 + postcode: 90210 (string) - The address postcode
 + countryCode: USA (string) - The address country code
 
-## Image
+## Media
 + id: 1 (number) - The image ID
 + width: 150 (number) - The image width
 + height: 150 (number) - The image height
@@ -1096,6 +1098,8 @@ Send a message through the contact form
 + members (array[OrganizationMember]) - An array of organization members
 + owner (object) - The organization owner
 + posts (array[ProfileUpdate]) - The status updates associated with the given project
++ video (Media)  - The organization's video
++ bannerImage array[(Media)] - The organization's profile banner image collection
 
 ### School (Organization)
 
