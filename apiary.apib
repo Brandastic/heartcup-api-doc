@@ -163,15 +163,52 @@ Update the given user
     - Attributes
         - message: Failed to create project (string) - The error message
 
+### Update Setting [PUT /user/{user}/updateSetting]
+
+Update a setting for the given user by key.
+
++ Parameters
+    + user (required) - The user ID or email address
+    
++ Attributes
+    + setting_name (required) - The settings name [eg: privacy_profile] and its new value [eg: public / private]
+
++ Response 200 (application/json)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred (string) - The error message
+
 ### Update Profile Image [PUT /user/{user}/profileImage]
 
 Update the given user's profile image
 
 + Parameters
     + user (required) - The user ID or email address
-
-+ Response 204 (application/json)
-
+    
++ Attributes(Media)
+    + media_data - Base64 Encoded + URL Encoded media data
+    + type - 0 = Profile Image, 1 = Banner Image,  2 = Project Thumbnail, 3 = Video
+    + alt_text - Alt Text for the media
+    + position - Sort order for the media in its collection
+    + height - Media Height
+    + width - Media Width
+    
++ Response 200 (application/json)
+    - Attributes
+        - id
+        - width
+        - height
+        - url
+        - altText
+        - position
+        - createdAt
+        - updatedAt
+        
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
