@@ -161,7 +161,105 @@ Update the given user
 
 + Response 500 (application/json)
     - Attributes
-        - message: Failed to create project (string) - The error message
+        - message: Failed to update user (string) - The error message
+        
+### User Reports [GET /user/{user}/reports]
+
+Retrieve donation and transaction history for the user
+
++ Parameters
+    + user (required) - The user ID or email address
+
++ Response 200 (application/json)
+    - Attributes
+        - donations_placed - An array of donation objects placed by the user
+        - transactions - An array of transaction objects associated with the user
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to retrieve reports (string) - The error message
+        
+### Update Address [PUT /user/{user}/updateAddress]
+
+Update a billing/shipping/etc address associated with the user.
+
++ Parameters
+    + user (required) - The user ID or email address
+
++ Attributes (Address)
+
++ Response 200 (application/json)
+    - Attributes (Address)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to update address (string) - The error message
+
+### Update Media [PUT /user/{user}/updateMedia]
+
+Add/update a(n existing) photo/banner/video (youtube,vimeo) for the user.
+
++ Parameters
+    + user (required) - The user ID or email address
+
++ Attributes (Media)
+
++ Response 200 (application/json)
+    - Attributes (Media)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to update media (string) - The error message
+
+### Request Account Upgrade [POST /user/{user}/upgradeAccount]
+
+Request the account be upgraded to the Professional tier.
+
++ Parameters
+    + user (required) - The user ID or email address
+    
++ Response 200 (application/json)
+    - Attributes
+        - messsage: The request is now pending moderation
+        
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to upgrade account (string) - The error message
+
+### Request Account Downgrade [POST /user/{user}/downgradeAccount]
+
+Request the account be downgraded to the free tier.
+
++ Parameters
+    + user (required) - The user ID or email address
+    
++ Response 200 (application/json)
+    - Attributes
+        - messsage: The account has been downgraded
+        
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to upgrade account (string) - The error message
 
 ### Update Setting [PUT /user/{user}/updateSetting]
 
@@ -346,6 +444,47 @@ Delete a project
     - Attributes
         - message: An error has occurred (string) - The error message
 
+
+### Update Address [PUT /project/{project}/updateAddress]
+
+Update a billing/shipping/etc address associated with the project.
+
++ Parameters
+    + project (required) - The project ID or url key
+
++ Attributes (Address)
+
++ Response 200 (application/json)
+    - Attributes (Address)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to update address (string) - The error message
+
+### Update Media [PUT /project/{project}/updateMedia]
+
+Add/update a(n existing) thumbnail/banner/video (youtube,vimeo) for the project.
+
++ Parameters
+    + project (required) - The project ID or url key
+
++ Attributes (Media)
+
++ Response 200 (application/json)
+    - Attributes (Media)
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to update media (string) - The error message
+        
 ## Search [/search]
 
 ### Search [GET /search/{?query,type,orderBy,order,limit,page}]
@@ -387,9 +526,9 @@ Fetch all categories
     - Attributes
         - message: An error has occurred (string) - The error message
 
-### Browse Category [GET /category/{?category_key,orderBy,order,limit,page}]
+### Browse Categories [GET /category/{?category_key,orderBy,order,limit,page}]
 
-List everything in a given category
+List all available categories
 
 + Parameters
     + category_key (optional) - The key for the category
@@ -405,6 +544,20 @@ List everything in a given category
     - Attributes
         - message: An error has occurred (string) - The error message
 
+### Browse Category Projects [GET /category/{category}/projects{?category_key,orderBy,order,limit,page}]
+
+View all projects associated to a specified category.
+
++ Parameters
+    + category (required) - The ID or key for the category to update
+
++ Response 200 (application/json)
+    - Attributes (array[Project])
+
++ Response 404 (application/json)
+    - Attributes
+        - message: Category not found (string) - The error message
+
 ### Update Category [PUT /category/{category}]
 
 Update a given category
@@ -412,7 +565,7 @@ Update a given category
 + Parameters
     + category (required) - The ID or key for the category to update
 
-+ Response 204 (application/json)
++ Response 200 (application/json)
     + Attributes (Category)
 
 + Response 403 (application/json)
