@@ -3,6 +3,26 @@ HOST: http://heartcup.apiblueprint.org/
 
 # HeartCup API
 
+## Content [/static-content]
+
+### Get Static Page Content [GET /static-content/{content_type}/{url_key}]
+
+Fetch the contents of a static page
+
++ Parameters
+    + content_type (required,string) - The type of content being fetched
+    + url_key (required,string) - The page identifier
+    
++ Response 200 (application/json)
+
++ Response 400
+    - Attributes
+        - message: Unknown content type (string) - The error message
+        
++ Response 404
+    - Attributes
+        - message: Page could not be found (string) - The error message
+
 ## Users [/users]
 
 ### Get User [GET /user/{user}]
@@ -163,17 +183,19 @@ Update the given user
     - Attributes
         - message: Failed to update user (string) - The error message
         
-### User Reports [GET /user/{user}/reports]
+### User Reports [GET /user/{user}/reports/{offset}]
 
 Retrieve donation and transaction history for the user
 
 + Parameters
     + user (required) - The user ID or email address
+    + offset (optional) - Number of days to provide reporting for Default:30, Max:90
 
 + Response 200 (application/json)
     - Attributes
-        - donations_placed - An array of donation objects placed by the user
-        - transactions - An array of transaction objects associated with the user
+        - donations_placed (array[Donation]) - An array of donation objects placed by the user
+        - transactions (array[Transaction]) - An array of transaction objects related to account balance
+        - account_fees (array[Transaction]) - An array of transaction objects related to account fees
 
 + Response 403 (application/json)
     - Attributes
