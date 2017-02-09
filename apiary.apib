@@ -968,7 +968,7 @@ Get posts for the given entity
 Create a new post
 
 + Response 201 (application/json)
-    + Attributes (Update)
+    + Attributes (pdate)
 
 + Response 403 (application/json)
     - Attributes
@@ -1227,14 +1227,14 @@ Send a message through the contact form
 + id: 1 (number) - The update ID
 + entityId: 1 (optional, number) - Optional ID of related entity
 + type (enum[number]) - The type of status update - project update, profile post
-    + Default: 0
+    + Default: 1
     + Members
-        + 0 - ProfileUpdate - Profile Post
-        + 1 - ProjectUpdate - Project Update
+        + 1 (default) - ProfileUpdate - Profile Post
+        + 2 - ProjectUpdate - Project Update
+        + 3 - OrganizationUpdate - Organization Update
 + description: Dummy Post Content (string) - The update description
 + createdDate: `2016-05-05T12:30:00` (string) - The update date (ISO8601 format)
 + status: 1 (enum[number]) - Pending Moderation / Approved / Denied / Inactive (Disabled)
-
 
 ### ProjectUpdate (Update)
 
