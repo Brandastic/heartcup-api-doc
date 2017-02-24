@@ -361,6 +361,17 @@ Update the given user's profile image
 
 ## Projects [/project]
 
+### Get Project Of The Day [GET /projectOfTheDay ]
+
+Retrieves the Project Of The Day
+
++ Response 200 (application/json)
+    - Attributes (Project)
+ 
++ Response 404 (application/json)
+    - Attributes
+        - message: Project Not Found (string) - The error Message
+
 ### Search [GET /project{?query,orderBy,order,limit,page}]
 
 Search for projects. Returns a list of project summaries.
