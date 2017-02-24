@@ -3,6 +3,26 @@ HOST: http://heartcup.apiblueprint.org/
 
 # HeartCup API
 
+## Submit Contact Request [POST /contact/send]
+
+Submit contact form - Using optional project ID requires JWT 
+
+- Attributes
+    - name (required,string) - Name of person submitting form
+    - email (required,string) - Email of person submitting form
+    - message (required,string) - Contact message to be submitted. Max Length: 2048
+    - projectId (optional,string) - ID of project to contact -  Requires JWT Token be present on request
+    
++ Response 200 (application/json)
+    - Attributes
+        - message - Confirmation of message being sent
++ Response 403 (application/json)
+    - Attributes
+        - message - Unauthorized request
++ Response 500 (application/json)
+    - Attributes
+        - message - The error message
+
 ## Content [/static-content]
 
 ### Get Static Page Content [GET /static-content/{content_type}/{url_key}]
