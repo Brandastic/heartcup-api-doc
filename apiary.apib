@@ -7,21 +7,24 @@ HOST: http://heartcup.apiblueprint.org/
 
 Submit contact form - Using optional project ID requires JWT 
 
-- Attributes
-    - name (required,string) - Name of person submitting form
-    - email (required,string) - Email of person submitting form
-    - message (required,string) - Contact message to be submitted. Max Length: 2048
-    - projectId (optional,string) - ID of project to contact -  Requires JWT Token be present on request
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        - name (required,string) - Name of person submitting form
+        - email (required,string) - Email of person submitting form
+        - message (required,string) - Contact message to be submitted. Max Length: 2048
+        - projectId (optional,string) - ID of project to contact -  Requires JWT Token be present on request
     
 + Response 200 (application/json)
     - Attributes
-        - message - Confirmation of message being sent
+        - message: Contact email sent (string) - Confirmation of message being sent
+        
 + Response 403 (application/json)
     - Attributes
-        - message - Unauthorized request
+        - message: Unauthorized request (string) - The error message
+        
 + Response 500 (application/json)
     - Attributes
-        - message - The error message
+        - message: Error sending contact email (string) - The error message
 
 ## Content [/static-content]
 
@@ -949,6 +952,9 @@ Update the given organization
 
 Create a new organization
 
++ Request (application/x-www-form-urlencoded)
+    + Attributes(Organization)
+
 + Response 201 (application/json)
     + Attributes (Organization)
 
@@ -1030,6 +1036,8 @@ Get posts for the given entity
 ### Create Post [POST /update]
 
 Create a new post
++ Request (application/x-www-form-urlencoded)
+    + Attributes (Update)
 
 + Response 201 (application/json)
     + Attributes (Update)
@@ -1126,24 +1134,6 @@ Delete a message from the queue when received
 + Response 403 (application/json)
     - Attributes
         - message: Permission denied (string) - The error message
-
-+ Response 500 (application/json)
-    - Attributes
-        - message: An error has occurred (string) - The error message
-
-## Contact [/contact]
-
-### Contact Form [POST /contact]
-
-Send a message through the contact form
-
-+ Response 200 (application/json)
-    + Attributes 
-        + message: Your message has been received and will be reviewed shortly (string) - The verification message
-
-+ Response 400 (application/json)
-    + Attributes 
-        + message: Fields cannot be left blank (string) - The error message
 
 + Response 500 (application/json)
     - Attributes
