@@ -205,13 +205,15 @@ Update the given user
     - Attributes
         - message: Failed to update user (string) - The error message
         
-### User Reports [GET /user/{user}/reports/{offset}]
+### User Reports [POST /user/{user}/reports]
 
 Retrieve donation and transaction history for the user
 
-+ Parameters
-    + user (required) - The user ID or email address
-    + offset (optional) - Number of days to provide reporting for Default:30, Max:90
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        + user (required) - The user ID or email address
+        + offset (optional) - Number of days to provide reporting for Default:30, Max:90
+        + export (optional,boolean) - Return data as streamed CSV file vs JSON object
 
 + Response 200 (application/json)
     - Attributes
@@ -360,6 +362,32 @@ Update the given user's profile image
         - message: An error has occurred (string) - The error message
 
 ## Projects [/project]
+
+### Donations Report [POST /project/{id}/donationsReport]
+
+Retrieves a report of donation history for the project.
+
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        + id - The ID of the project
+        + export (optional,boolean) - Whether to return a JSON object or a streamed CSV file
+        + offset (optional, number) - The date offset for loading the collection (eg last X days)
+        + limit (optional, number) - Number of donations per page to return
+        + order (optional, string) - ASC/DESC
+        + orderBy (optional, string) - The field to sort by
+        + page (optional, number) - The page number of the collection to load
+
++ Response 200 (application/json)
+    - Attributes (object)
+        - total (number)
+        - per_page (number) 
+        - current_page (number)
+        - last_page (number)
+        - next_page_url (string)
+        - prev_page_url (string)
+        - from (number) 
+        - to (number) 
+        - data (array[Donation])
 
 ### Get Project Of The Day [GET /projectOfTheDay ]
 
@@ -635,7 +663,12 @@ Update a given category
 
 Create a new category
 
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        - name (required,string) - The name of the new category
+
 + Response 201 (application/json)
+    + Attributes(Category)
 
 + Response 422 (application/json)
     + Attributes
