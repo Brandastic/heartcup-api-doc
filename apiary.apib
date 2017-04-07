@@ -32,6 +32,22 @@ Submit contact form - Using optional project ID requires JWT
     - Attributes
         - message: Error sending contact email (string) - The error message
 
+## Newsletter [POST /newsletter]
+
+Subscribe to the newsletter
+
++ Request (application/x-www-form-urlencoded)
+    + Attributes
+        - email (required,string) - Email of person submitting form
+    
++ Response 200 (application/json)
+    - Attributes
+        - message: Subscription successful. (string) - Subscription success message
+        
++ Response 500 (application/json)
+    - Attributes
+        - message: Failed to subscribe (string) - The error message
+
 ## Content [/static-content]
 
 ### Get Static Page Content [GET /static-content/{content_type}/{url_key}]
@@ -1387,4 +1403,4 @@ Delete a message from the queue when received
 
 + id: 1 (number) - The ID of the organization member
 + organizationId: 1 (number) - The ID of the organization that the member is a part of
-+ userId: 1 (number) - The ID of the stored user 
++ userId: 1 (number) - The ID of the stored user
