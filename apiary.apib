@@ -691,6 +691,7 @@ Create a new category
 + Request (application/x-www-form-urlencoded)
     + Attributes
         - name (required,string) - The name of the new category
+        - position (optional, number) - The position of the category in the list
 
 + Response 201 (application/json)
     + Attributes(Category)
@@ -840,6 +841,7 @@ Donate to a project
         - projectId (required,number) - Project ID to submit donation to
         - amount (required,number) - Amount to donate
         - details (string) - Transaction details
+        - updateId (optional, number) - The project post to associate the donation with
 
 + Response 200 (application/json)
     - Attributes
@@ -1023,6 +1025,11 @@ Get a post for a given entity (User, Project, Organization)
 
 + Response 200 (application/json)
     + Attributes (Update)
+        + projectData (object) - Information about the optionally associated project
+            + id - Project ID
+            + title - Project Title
+            + status - Project's status
+            + you_donated - Amount donated via update in context of currently authenticated user
 
 + Response 403 (application/json)
     - Attributes
@@ -1346,6 +1353,7 @@ Delete a message from the queue when received
 ### Donation (PaymentObject)
 
 + projectId: 1 (number) - The project ID associated with the donation
++ updateID: 1 (optional, number) - The update object this donation is associated with
 
 ## Permission
 
@@ -1380,6 +1388,7 @@ Delete a message from the queue when received
 
 + id: 1 (number) - The ID of the stored category
 + key: 1 (number) - The ID of the URL key corresponding to the category
++ position: 0 (number) - The Position of the category in the list
 
 ## Organization
 
