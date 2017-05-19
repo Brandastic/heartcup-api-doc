@@ -414,12 +414,36 @@ Retrieves a report of donation history for the project.
         - to (number) 
         - data (array[Donation])
 
+### Get Recent Projects [GET /recentProjects ]
+
+Retrieves the 9 most recently created approved projects
+
++ Response 200 (application/json)
+    - Attributes
+        - data (array[ProjectDetail])
+
+### Get Closest To Funded Projects [GET /closestToFunded ]
+
+Retrieves the 9 projects closest to being funded
+
++ Response 200 (application/json)
+    - Attributes
+        - data (array[ProjectDetail])
+
+### Get Trending Projects [GET /trendingProjects ]
+
+Retrieves the 9 projects most recently donated to
+
++ Response 200 (application/json)
+    - Attributes
+        - data (array[ProjectDetail])
+
 ### Get Project Of The Day [GET /projectOfTheDay ]
 
 Retrieves the Project Of The Day
 
 + Response 200 (application/json)
-    - Attributes (Project)
+    - Attributes (ProjectDetail)
  
 + Response 404 (application/json)
     - Attributes
