@@ -669,16 +669,15 @@ List all available categories
     - Attributes
         - message: An error has occurred (string) - The error message
 
-### Get A Single Category [GET /category/{category}]
+### Get A Single Category [GET /category/{categoryId}]
 
 Fetch an individual category
 
 + Parameters
-    + category (required) - The ID or key for the category
+    + categoryId (required, number) - The ID or key for the category
     
 + Response 200 (application/json)
-    - Attributes
-        - [StoredCategory]
+    - Attributes (StoredCategory)
 
 + Response 404 (application/json)
     - Attributes
