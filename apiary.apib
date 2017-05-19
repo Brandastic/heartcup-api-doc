@@ -672,11 +672,13 @@ List all available categories
 ### Get A Single Category [GET /category/{category}]
 
 Fetch an individual category
+
 + Parameters
     + category (required) - The ID or key for the category
     
 + Response 200 (application/json)
-    - Attributes [StoredCategory]
+    - Attributes
+        - [StoredCategory]
 
 + Response 404 (application/json)
     - Attributes
@@ -1315,9 +1317,9 @@ Delete a message from the queue when received
 + beneficiaryUrl (string) - The website of the beneficiary for the project
 + beneficiaryAddress ([address]) - The address of the beneficiary for the project
 + fundingComplete: 0 (enum[number]) - Whether or not the project has met or passed it's goal
-+ percentFunded (float) - The decimal representation of the percentage of the goal reached for the project
++ percentFunded (number) - The decimal representation of the percentage of the goal reached for the project
 + followersCount (number) - The number of users following this project
-+ amIFollowing (bool) - Whether or not the current user is following the current project
++ amIFollowing (boolean) - Whether or not the current user is following the current project
 
 ## Address
 
@@ -1371,25 +1373,23 @@ Delete a message from the queue when received
 + projectId: 1 (number) - The project ID associated with the status update
 + userId: 1 (number) - The ID of the user who created the status update
 + projectData (object) - Several attributes from the associated project
-    + Members
-        + id
-        + status
-        + title
-        + youDonated
+    + id
+    + status
+    + title
+    + youDonated
 
 ### ProfileUpdate (Update) 
 
 + userId: 1 (number) - The user ID associated with the status update
 + organizationId: 1 (number) - The organization ID associated with the status update
 + taggedProjectData (object) - Several attributes from the tagged project
-    + Members
-        + id
-        + title
-        + status
-        + percentFunded
-        + thumbnailImage
-        + billingAddress
-        + youDonated
+    + id
+    + title
+    + status
+    + percentFunded
+    + thumbnailImage
+    + billingAddress
+    + youDonated
 
 ## PaymentObject
 
@@ -1413,7 +1413,7 @@ Delete a message from the queue when received
         + 0 (default) - Payment
         + 1 - Donation
 + currency: USD (string) - The currency for the transaction
-+ amountBeforeFees (float) - The original amount requested to be added to the customer account before transaction fees
++ amountBeforeFees (number) - The original amount requested to be added to the customer account before transaction fees
 
 ### Donation (PaymentObject)
 
