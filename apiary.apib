@@ -1094,16 +1094,83 @@ Get a post for a given entity (User, Project, Organization)
     - Attributes
         - message: An error has occurred (string) - The error message
 
-### Get Posts By Entity [GET /update/{type}/{entity_id}]
+### Get Posts By Entity [GET /update/{type}/{entity_id}{?orderBy,order,limit,page}]
 
 Get posts for the given entity
 
 + Parameters
     + type - The update type (1 - User, 2 - Project, 3 - Organization)
     + entity_id - The ID of the entity
+    + orderBy (optional) - Update attribute to order by (default: created_at)
+    + order (optional) - DESC or ASC (default: DESC)
+    + limit (optional) - The maximum number of updates to return (default: 50)
+    + page (optional) - The page to return, if limit is also given
 
 + Response 200 (application/json)
-    + Attributes (array[Update]) 
+    - Attributes (object)
+        - total (number)
+        - per_page (number)
+        - current_page (number)
+        - last_page (number)
+        - next_page_url (string)
+        - prev_page_url (string)
+        - from (number)
+        - to (number)
+        - data (array)
+            - (Update)
+                - id: 1 (number)
+                - description: Update 1
+            - (Update)
+                - id: 2 (number)
+                - description: Update 1
+            - (Update)
+                - id: 3 (number)
+                - description: Update 1
+
++ Response 400 (application/json)
+    - Attributes
+        - message: Invalid request (string) - The error message
+
++ Response 403 (application/json)
+    - Attributes
+        - message: Permission denied (string) - The error message
+
++ Response 500 (application/json)
+    - Attributes
+        - message: An error has occurred (string) - The error message
+
+### Get Update Feed By Entity [GET /update/{type}/{entity_id}/feed{?orderBy,order,limit,page}]
+
+Get the update feed for the given entity
+
++ Parameters
+    + type - The update type (1 - User, 2 - Project, 3 - Organization)
+    + entity_id - The ID of the entity
+    + orderBy (optional) - Update attribute to order by (default: created_at)
+    + order (optional) - DESC or ASC (default: DESC)
+    + limit (optional) - The maximum number of updates to return (default: 50)
+    + page (optional) - The page to return, if limit is also given
+
++ Response 200 (application/json)
+    - Attributes (object)
+        - total (number)
+        - per_page (number)
+        - current_page (number)
+        - last_page (number)
+        - next_page_url (string)
+        - prev_page_url (string)
+        - from (number)
+        - to (number)
+        - data (array)
+            - (Update)
+                - id: 1 (number)
+                - description: Update 1
+            - (Update)
+                - id: 2 (number)
+                - description: Update 1
+            - (Update)
+                - id: 3 (number)
+                - description: Update 1
 
 + Response 400 (application/json)
     - Attributes
